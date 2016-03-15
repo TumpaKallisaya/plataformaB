@@ -83,7 +83,7 @@ class Chat extends Controller{
         $id_usuario = $_GET['id_usuario'];
         $ultimo_tema = $this->input->get('ultimo_tema', '');
         
-        $listaTemasAtt = $this->chatmodel->getLisTemAbiOpe($id_usuario, $ultimo_tema);
+        $listaTemasOpe = $this->chatmodel->getLisTemAbiOpe($id_usuario, $ultimo_tema);
         $this->_setOutput($listaTemasOpe);
     }
     

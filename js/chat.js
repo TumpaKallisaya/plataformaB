@@ -56,7 +56,7 @@ var append_lista_abiertos = function(listabiertos_data){
             ultTema = parseInt(document.getElementById('ultimoTema').value);
         }
         if(dataid > ultTema){
-            var html = '<li ><a href="#">'+ data.tema +'</a></li>';
+            var html = '<li data-value="'+data.id+'"><a href="#">'+ data.tema +'</a></li>';
             document.getElementById('ultimoTema').value = data.id;
             $('#temasRecientes').html($('#temasRecientes').html()+html);
         }
