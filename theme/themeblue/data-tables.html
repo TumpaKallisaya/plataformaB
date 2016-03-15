@@ -1,0 +1,1652 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Falgun - Metro Style Bootstrap Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome.css">
+<!--[if IE 7]>
+            <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+        <![endif]-->
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/theme-blue.css" rel="stylesheet">
+
+<!--[if IE 7]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie7.css" />
+        <![endif]-->
+<!--[if IE 8]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie8.css" />
+        <![endif]-->
+<!--[if IE 9]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie9.css" />
+        <![endif]-->
+<link href="css/tablecloth.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href="ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+<!--============j avascript===========-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/accordion.nav.js"></script>
+<script src="js/jquery.tablecloth.js"></script>
+<script src="js/jquery.dataTables.js"></script>
+<script src="js/ZeroClipboard.js"></script>
+<script src="js/dataTables.bootstrap.js"></script>
+<script src="js/TableTools.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/ios-orientationchange-fix.js"></script>
+<script type="text/javascript">
+            /*$( function () {
+		  // Set the classes that TableTools uses to something suitable for Bootstrap
+		  $.extend( true, $.fn.DataTable.TableTools.classes, {
+			  "container": "btn-group",
+			  "buttons": {
+				  "normal": "btn",
+				  "disabled": "btn disabled"
+			  },
+			  "collection": {
+				  "container": "DTTT_dropdown dropdown-menu",
+				  "buttons": {
+					  "normal": "",
+					  "disabled": "disabled"
+				  }
+			  }
+		  } );
+		  // Have the collection use a bootstrap compatible dropdown
+		  $.extend( true, $.fn.DataTable.TableTools.DEFAULTS.oTags, {
+			  "collection": {
+				  "container": "ul",
+				  "button": "li",
+				  "liner": "a"
+			  }
+		  } );
+		  });
+		  */
+            $(function () {
+                $('#data-table').dataTable({
+                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+                    /*"oTableTools": {
+			"aButtons": [
+				"copy",
+				"print",
+				{
+					"sExtends":    "collection",
+					"sButtonText": 'Save <span class="caret" />',
+					"aButtons":    [ "csv", "xls", "pdf" ]
+				}
+			]
+		}*/
+                });
+            });
+            $(function () {
+                $('.tbl-simple').dataTable({
+                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+                });
+            });
+			
+			$(function () {
+			$(".tbl-paper-theme").tablecloth({
+          theme: "paper"
+		   });
+			});
+			
+		$(function () {
+			$(".tbl-dark-theme").tablecloth({
+          theme: "dark"
+		   });
+		});
+			$(function () {
+                $('.tbl-paper-theme,.tbl-dark-theme').dataTable({
+                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>"
+                });
+	
+
+            });
+        </script>
+</head>
+<body>
+<div class="layout">
+	<!-- Navbar================================================== -->
+	<div class="navbar navbar-inverse top-nav">
+		<div class="navbar-inner">
+			<div class="container">
+				<span class="home-link"><a href="index.html" class="icon-home"></a></span><a class="brand" href="./index.html"><img src="images/logo-falgun.png" width="103" height="50" alt="Falgun"></a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-th-large"></i> Forms <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements </a></li>
+								<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+								<li><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation</a></li>
+								<li><a href="form-wizard.html"><i class="icon-external-link"></i> Form Wizard </a></li>
+								<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor </a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-beaker"></i> Features <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+								<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+								<li><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+								<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+								<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+								<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+								<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-list-alt"></i> UI elements <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> Components &amp; UI Elements</a></li>
+								<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-file-alt"></i> Pages <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li class="dropdown-submenu"><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+								<div class="dropdown-menu">
+									<ul>
+										<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+										<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+										<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+										<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+										<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+									</ul>
+								</div>
+								</li>
+								<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+								<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+								<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+								<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-bar-chart"></i> Charts <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+								<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge Chart</a></li>
+							</ul>
+						</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-toolbar pull-right notification-nav">
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification dropdown-toggle" data-toggle="dropdown"><i class="icon-globe"><span class="notify-tip">30</span></i></a>
+							<div class="dropdown-menu pull-right ">
+								<span class="notify-h"> You have 20 notifications</span><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/notify-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere quam in nul<span class="notify-time"> 3 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class="icon-file"></i></span><span class="notification-intro"><strong>Files </strong>In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 8 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/user-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 3 Days Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class=" icon-envelope-alt"></i></span><span class="notification-intro"><strong>Message</strong> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 2 Weeks Ago </span></span></a>
+								<button class="btn btn-primary btn-large btn-block"> View All</button>
+							</div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification"><i class="icon-lock"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="leftbar leftbar-close clearfix">
+		<div class="admin-info clearfix">
+			<div class="admin-thumb">
+				<i class="icon-user"></i>
+			</div>
+			<div class="admin-meta">
+				<ul>
+					<li class="admin-username">Kamrujam Shohel</li>
+					<li><a href="#">Edit Profile</a></li>
+					<li><a href="#">View Profile </a><a href="#"><i class="icon-lock"></i> Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="left-nav clearfix">
+			<div class="left-primary-nav">
+				<ul id="myTab">
+					<li><a href="#main" class="icon-desktop" title="Dashboard"></a></li>
+					<li><a href="#forms" class="icon-th-large" title="Forms"></a></li>
+					<li class="active"><a href="#features" class="icon-beaker" title="Features"></a></li>
+					<li><a href="#ui-elements" class="icon-list-alt" title="UI&nbsp;Elements"></a></li>
+					<li><a href="#pages" class="icon-file-alt" title="Pages"></a></li>
+					<li><a href="#chart" class="icon-bar-chart" title="Chart"></a></li>
+				</ul>
+				<ul>
+					<li><a href="chat.html" class="icon-comments" title="Chat"></a></li>
+					<li><a href="text-editor.html" class="icon-pencil" title="WYSIWYG editor"></a></li>
+				</ul>
+			</div>
+			<div class="responsive-leftbar">
+				<i class="icon-list"></i>
+			</div>
+			<div class="left-secondary-nav tab-content">
+				<div class="tab-pane" id="main">
+					<h4 class="side-head">Dashboard</h4>
+					<div class="search-box">
+						<div class="input-append input-icon">
+							<input class="search-input" placeholder="Search..." type="text">
+							<i class=" icon-search"></i>
+							<button class="btn" type="button">Go!</button>
+						</div>
+					</div>
+					<ul class="metro-sidenav clearfix">
+						<li><span class="notify-tip">30</span><a href="#" class="brown"><i class="icon-user"></i><span>User</span></a></li>
+						<li><a href="#" class="orange"><i class="icon-cogs"></i><span>Settings</span></a></li>
+						<li><a href="#" class=" blue-violate"><i class="icon-lightbulb"></i><span>Support</span></a></li>
+						<li><a href="#" class=" magenta"><i class="icon-bar-chart"></i><span>Statistics</span></a></li>
+						<li><a href="#" class="green"><i class="icon-shopping-cart"></i><span>Orders</span></a></li>
+						<li><a href="#" class=" bondi-blue"><i class="icon-time"></i><span>Events</span></a></li>
+						<li><a href="#" class=" dark-yellow"><i class="icon-file-alt"></i><span>Post</span></a></li>
+						<li><a href="#" class=" blue"><i class="icon-copy"></i><span>Documents</span></a></li>
+					</ul>
+					<div class="side-widget">
+						<div class="board-widgets light-blue">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Bandwidth Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-cloud"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-info">
+									<div class="bar" style="width: 48%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">48%</i> 12000 MB / 25000 MB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets light-blue ">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Disk Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-hdd"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-success">
+									<div class="bar" style="width: 20%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">20%</i> 50GB / 250 GB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets gray">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Visitors</h4>
+								<a href="#" class="widget-settings"><i class="icon-group"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="line-min-chart min-chart">
+								</div>
+								<div class="stat-text">
+									26458 <i class="up icon-sort-up"></i> 5%
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="forms">
+					<h4 class="side-head">Forms</h4>
+					<ul id="nav" class="accordion-nav">
+						<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements <span class="notify-tip">50</span></a></li>
+						<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+						<li><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation<span>Quisque commodo lectus sit amet sem </span></a></li>
+						<li><a href="form-wizard.html"><i class="icon-external-link"></i> Wizard </a></li>
+						<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor <span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+				<div class="tab-pane active" id="features">
+					<h4 class="side-head">Features</h4>
+					<ul class="accordion-nav">
+						<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+						<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+						<li class="active"><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+						<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+						<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+						<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+						<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="ui-elements">
+					<h4 class="side-head">UI Elements</h4>
+					<ul class="accordion-nav">
+						<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> UI Components</a></li>
+						<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="pages">
+					<h4 class="side-head">Pages</h4>
+					<ul class="accordion-nav">
+						<li><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+						<ul>
+							<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+							<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+							<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+							<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+							<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+						</ul>
+						</li>
+						<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+						<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+						<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+						<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="chart">
+					<h4 class="side-head">Charts</h4>
+					<ul class="accordion-nav">
+						<li><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+						<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge<span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-wrapper">
+		<div class="container-fluid">
+			<div class="row-fluid ">
+				<div class="span12">
+					<div class="primary-head">
+						<h3 class="page-header">Data Tables</h3>
+						<ul class="top-right-toolbar">
+							<li><a data-toggle="dropdown" class="dropdown-toggle blue-violate" href="#" title="Users"><i class="icon-user"></i></a>
+							</li>
+							<li><a href="#" class="green" title="Upload"><i class=" icon-upload-alt"></i></a></li>
+							<li><a href="#" class="bondi-blue" title="Settings"><i class="icon-cogs"></i></a></li>
+						</ul>
+					</div>
+					<ul class="breadcrumb">
+						<li><a href="#" class="icon-home"></a><span class="divider "><i class="icon-angle-right"></i></span></li>
+						<li><a href="#">Library</a><span class="divider"><i class="icon-angle-right"></i></span></li>
+						<li class="active">Tables</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets light-gray">
+						<div class="widget-head orange">
+							<h3>Data Table</h3>
+						</div>
+						<div class="widget-container">
+							<p>
+								Aenean nibh ante, lacinia non tincidunt nec, lobortis ut tellus. Sed in porta diam. Suspendisse potenti. Donec luctus ullamcorper nulla. Duis nec velit odio. Nunc pulvinar nulla vitae nulla molestie posuere. Pellentesque aliquet vehicula orci, sit amet scelerisque lorem suscipit convallis. Mauris quam odio, hendrerit eu iaculis pellentesque, laoreet nec est. Pellentesque lobortis velit sit amet augue interdum posuere. Proin vel ligula sed felis rhoncus pellentesque aliquet eu nunc. Etiam convallis laoreet porttitor. Cras placerat blandit lorem id tempor. Aenean aliquam consectetur orci ut hendrerit. Donec mollis placerat ipsum, in vehicula mi euismod congue.
+							</p>
+							<table class="table table-striped table-bordered" id="data-table">
+							<thead>
+							<tr>
+								<th>
+									 OrderDate
+								</th>
+								<th>
+									 Region
+								</th>
+								<th>
+									 Rep
+								</th>
+								<th>
+									 Item
+								</th>
+								<th>
+									 Units
+								</th>
+								<th>
+									 Unit Cost
+								</th>
+								<th>
+									 Total
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>
+									 1/6/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 95
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 189.05
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 1/23/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Kivell
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 50
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 999.50
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 2/9/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Jardine
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 36
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 179.64
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 2/26/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Gill
+								</td>
+								<td>
+									 Pen
+								</td>
+								<td>
+									 27
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 539.73
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 3/15/10
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Sorvino
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 56
+								</td>
+								<td>
+									 2.99
+								</td>
+								<td>
+									 167.44
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 4/1/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 60
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 299.40
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 4/18/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Andrews
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 75
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 149.25
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 5/5/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Jardine
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 90
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 449.10
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 5/22/10
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Thompson
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 32
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 63.68
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 6/8/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 60
+								</td>
+								<td>
+									 8.99
+								</td>
+								<td>
+									 539.40
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 6/25/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Morgan
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 90
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 449.10
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 7/12/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Howard
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 29
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 57.71
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 7/29/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Parent
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 81
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 1,619.19
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 8/15/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 35
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 174.65
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 9/1/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Smith
+								</td>
+								<td>
+									 Desk
+								</td>
+								<td>
+									 2
+								</td>
+								<td>
+									 125.00
+								</td>
+								<td>
+									 250.00
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 9/18/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 16
+								</td>
+								<td>
+									 15.99
+								</td>
+								<td>
+									 255.84
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 10/5/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Morgan
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 28
+								</td>
+								<td>
+									 8.99
+								</td>
+								<td>
+									 251.72
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 10/22/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Pen
+								</td>
+								<td>
+									 64
+								</td>
+								<td>
+									 8.99
+								</td>
+								<td>
+									 575.36
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 11/8/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Parent
+								</td>
+								<td>
+									 Pen
+								</td>
+								<td>
+									 15
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 299.85
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 11/25/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Kivell
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 96
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 479.04
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 12/12/10
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Smith
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 67
+								</td>
+								<td>
+									 1.29
+								</td>
+								<td>
+									 86.43
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 12/29/10
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Parent
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 74
+								</td>
+								<td>
+									 15.99
+								</td>
+								<td>
+									 1,183.26
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 1/15/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Gill
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 46
+								</td>
+								<td>
+									 8.99
+								</td>
+								<td>
+									 413.54
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 2/1/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Smith
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 87
+								</td>
+								<td>
+									 15.00
+								</td>
+								<td>
+									 1,305.00
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 2/18/11
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 4
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 19.96
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 3/7/11
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Sorvino
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 7
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 139.93
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 3/24/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Jardine
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 50
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 249.50
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 4/10/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Andrews
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 66
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 131.34
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 4/27/11
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Howard
+								</td>
+								<td>
+									 Pen
+								</td>
+								<td>
+									 96
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 479.04
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 5/14/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Gill
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 53
+								</td>
+								<td>
+									 1.29
+								</td>
+								<td>
+									 68.37
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 5/31/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Gill
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 80
+								</td>
+								<td>
+									 8.99
+								</td>
+								<td>
+									 719.20
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 6/17/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Kivell
+								</td>
+								<td>
+									 Desk
+								</td>
+								<td>
+									 5
+								</td>
+								<td>
+									 125.00
+								</td>
+								<td>
+									 625.00
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 7/4/11
+								</td>
+								<td>
+									 Quebec
+								</td>
+								<td>
+									 Jones
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 62
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 309.38
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 7/21/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Morgan
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 55
+								</td>
+								<td>
+									 12.49
+								</td>
+								<td>
+									 686.95
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 8/7/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Kivell
+								</td>
+								<td>
+									 Pen Set
+								</td>
+								<td>
+									 42
+								</td>
+								<td>
+									 23.95
+								</td>
+								<td>
+									 1,005.90
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 8/24/11
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Sorvino
+								</td>
+								<td>
+									 Desk
+								</td>
+								<td>
+									 3
+								</td>
+								<td>
+									 275.00
+								</td>
+								<td>
+									 825.00
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 9/10/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Gill
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 7
+								</td>
+								<td>
+									 1.29
+								</td>
+								<td>
+									 9.03
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 9/27/11
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Sorvino
+								</td>
+								<td>
+									 Pen
+								</td>
+								<td>
+									 76
+								</td>
+								<td>
+									 1.99
+								</td>
+								<td>
+									 151.24
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 10/14/11
+								</td>
+								<td>
+									 Alberta
+								</td>
+								<td>
+									 Thompson
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 57
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 1,139.43
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 10/31/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Andrews
+								</td>
+								<td>
+									 Pencil
+								</td>
+								<td>
+									 14
+								</td>
+								<td>
+									 1.29
+								</td>
+								<td>
+									 18.06
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 11/17/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Jardine
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 11
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 54.89
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 12/4/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Jardine
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 94
+								</td>
+								<td>
+									 19.99
+								</td>
+								<td>
+									 1,879.06
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 12/21/11
+								</td>
+								<td>
+									 Ontario
+								</td>
+								<td>
+									 Andrews
+								</td>
+								<td>
+									 Binder
+								</td>
+								<td>
+									 28
+								</td>
+								<td>
+									 4.99
+								</td>
+								<td>
+									 139.72
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header"> Table</h4>
+							</div>
+							<div>
+								<table class="table table-striped tbl-simple table-bordered">
+								<thead>
+								<tr>
+									<th>
+										#
+									</th>
+									<th>
+										First Name
+									</th>
+									<th>
+										Last Name
+									</th>
+									<th>
+										Username
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										1
+									</td>
+									<td>
+										Mark
+									</td>
+									<td>
+										Otto
+									</td>
+									<td>
+										@mdo
+									</td>
+								</tr>
+								<tr>
+									<td>
+										2
+									</td>
+									<td>
+										Jacob
+									</td>
+									<td>
+										Thornton
+									</td>
+									<td>
+										@fat
+									</td>
+								</tr>
+								<tr>
+									<td>
+										3
+									</td>
+									<td>
+										Larry
+									</td>
+									<td>
+										the Bird
+									</td>
+									<td>
+										@twitter
+									</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header"> Data Table With Paper Theme</h4>
+							</div>
+							<div>
+								<table class="table table-striped table-bordered tbl-paper-theme">
+								<thead>
+								<tr>
+									<th>
+										#
+									</th>
+									<th>
+										First Name
+									</th>
+									<th>
+										Last Name
+									</th>
+									<th>
+										Username
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										1
+									</td>
+									<td>
+										Mark
+									</td>
+									<td>
+										Otto
+									</td>
+									<td>
+										@mdo
+									</td>
+								</tr>
+								<tr>
+									<td>
+										2
+									</td>
+									<td>
+										Jacob
+									</td>
+									<td>
+										Thornton
+									</td>
+									<td>
+										@fat
+									</td>
+								</tr>
+								<tr>
+									<td>
+										3
+									</td>
+									<td>
+										Larry
+									</td>
+									<td>
+										the Bird
+									</td>
+									<td>
+										@twitter
+									</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header"> Data Table With Dark Theme</h4>
+							</div>
+							<div>
+								<table class="table-striped table-bordered tbl-dark-theme">
+								<thead>
+								<tr>
+									<th>
+										#
+									</th>
+									<th>
+										First Name
+									</th>
+									<th>
+										Last Name
+									</th>
+									<th>
+										Username
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										1
+									</td>
+									<td>
+										Mark
+									</td>
+									<td>
+										Otto
+									</td>
+									<td>
+										@mdo
+									</td>
+								</tr>
+								<tr>
+									<td>
+										2
+									</td>
+									<td>
+										Jacob
+									</td>
+									<td>
+										Thornton
+									</td>
+									<td>
+										@fat
+									</td>
+								</tr>
+								<tr>
+									<td>
+										3
+									</td>
+									<td>
+										Larry
+									</td>
+									<td>
+										the Bird
+									</td>
+									<td>
+										@twitter
+									</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<p>
+			&copy; 2013 westilian
+		</p>
+	</div>
+	<div class="scroll-top">
+		<a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<?php
+class PersonModel extends Model {
+	//------------------------------------------
+	//------Cttes Parte Legal
+	private $tb_operador='tb_operador';
+	private $tb_representantes='tb_representantes';
+	private $tb_observacion='tb_observacion';
+	private $tb_observacion_tec='tb_observacion_tec';
+	private $tb_adjuntos='tb_adjuntos';
+	private $tb_observadosrepre='tb_observadosrepre';
+	private $tb_socios='tb_socios';
+	private $tb_nominas='tb_nominas';
+	private $tb_deptos='tb_deptos';
+	private $tb_prov='tb_prov';
+	private $tb_ciudad='tb_ciudad';
+	//------------------------------------------
+	//------Licencias
+	private $tb_licencias='tb_licencias';
+	//------------------------------------------
+	//------numeracion
+	private $numeracion='numeracion';
+
+	//------------------------------------------
+	//------Cttes Revision Previa
+	private $servicio='servicio';
+	private $tb_tecnica='tb_tecnica';
+	private $tb_moviles='tb_moviles';
+
+	const TABLA_SERVICIO = 'servicio';
+	const COD_SERVICIO = 'Cod_Servicio';
+	const TIPO_RED = 'Tipo_Red';
+	const NOINICIAL = 'NOINICIAL';
+	const NOFINAL = 'NOFINAL';
+	const TB_TECNICA = 'tb_tecnica';
+
+	const ID_ESTACION_ORIGEN='Id_Estacion_Origen';
+	
+	//------------------------------------------------------------------------------
+	//---------------------   Desarrollo por Gregory Pekynov     -------------------
+	//---------------------             Parte Legal              -------------------
+	//------------------------------------------------------------------------------
+	function obt_operador_all($id_operador){
+		$this->db->where('IdOperador', $id_operador);
+		return $this->db->get($this->tb_operador);
+	}
+
+	function obt_departamento($dpto){
+		$this->db->where('Sigla_Dep', $dpto);
+		return $this->db->get($this->tb_deptos);
+	}
+
+	function obt_provincia($prov){
+		$this->db->where('Sigla_Prov', $prov);
+		return $this->db->get($this->tb_prov);
+	}
+
+	function obt_ciudad($ciudad){
+		$this->db->where('Sigla_Ciudad', $ciudad);
+		return $this->db->get($this->tb_ciudad);
+	}
+
+	function obt_observados_all($Id_Observado){
+		$this->db->where('Id_Observado', $Id_Observado);
+		return $this->db->get($this->tb_observacion);
+	}
+
+	function obt_observ_repre($Id_Obser_Repre){
+		$this->db->where('Id_Obser_Repre', $Id_Obser_Repre);
+		return $this->db->get($this->tb_observadosrepre);
+	}
+
+	function obt_representantes($id_operador){
+		$this->db->where('Id_Operador', $id_operador);
+		return $this->db->get($this->tb_representantes);
+	}
+
+	function obt_representantes_legales($Id_Repre_Legal){
+		$this->db->where('Id_Repre_Legal', $Id_Repre_Legal);
+		return $this->db->get($this->tb_representantes);
+	}
+
+	function obt_socios($id_operador){
+		$this->db->where('Id_Operador', $id_operador);
+		return $this->db->get($this->tb_socios);
+	}
+
+	function obt_nomina($id_operador){
+		$this->db->where('Id_Operador', $id_operador);
+		return $this->db->get($this->tb_nominas);
+	}
+
+	function update_operador($cod_operador,$dato_operador){
+		$this->db->where('IdOperador',$cod_operador);
+		$this->db->update($this->tb_operador,$dato_operador);
+	}
+
+	function update_repre_legal($id_repre_legal, $dato_repre_legal){
+		$this->db->where('Id_Repre_Legal',$id_repre_legal);
+		$this->db->update($this->tb_representantes,$dato_repre_legal);
+	}
+
+	function update_socios($id_socio, $dato_socios){
+		$this->db->where('Id_Socio',$id_socio);
+		$this->db->update($this->tb_socios,$dato_socios);
+	}
+
+	function update_nominas($Id_Nomina, $dato_miembros){
+		$this->db->where('Id_Nomina',$Id_Nomina);
+		$this->db->update($this->tb_nominas,$dato_miembros);
+	}
+	
+	function add_repre_legal($dato_repre_legal){
+		$this->db->insert($this->tb_representantes, $dato_repre_legal);
+		return $this->db->insert_id();
+	}
+
+	function add_socios($dato_socios){
+		$this->db->insert($this->tb_socios, $dato_socios);
+		return $this->db->insert_id();
+	}
+
+	function add_nomina($dato_nomina){
+		$this->db->insert($this->tb_nominas, $dato_nomina);
+		return $this->db->insert_id();
+	}
+
+	function add_observaciones($observados){
+		$this->db->insert($this->tb_observacion, $observados);
+		return $this->db->insert_id();
+	}
+
+	function add_obs_repre($dato_repre_legal){
+		$this->db->insert($this->tb_observadosrepre, $dato_repre_legal);
+		return $this->db->insert_id();
+	}
+
+	function add_adjuntos($adjuntos){
+		$this->db->insert($this->tb_adjuntos, $adjuntos);
+		return $this->db->insert_id();
+	}
+
+	function encontrar_operador($word_operador){
+		//$this->db->order_by('IdOperador','asc');
+		$this->db->like('IdOperador', $word_operador);
+		$this->db->or_like('RazonSocial', $word_operador);
+		$this->db->or_like('NomComercialOperador', $word_operador);
+		return $this->db->get($this->tb_operador);
+	}
+
+	function eliminar_rep_legal($id){
+		$this->db->where('Id_Repre_Legal',$id);
+		$this->db->delete($this->tb_representantes);
+	}
+
+	function eliminar_socios($id){
+		$this->db->where('Id_Socio',$id);
+		$this->db->delete($this->tb_socios);
+	}
+
+	function eliminar_nominas($id){
+		$this->db->where('Id_Nomina',$id);
+		$this->db->delete($this->tb_nominas);
+	}
+
+	/*function add_tipo_servicio($adjuntos){
+		$this->db->insert($this->tb_adjuntos, $adjuntos);
+		return $this->db->insert_id();
+	}*/
+	//----------------------------------------------------------------------
+	//********************    Revision Previa      *************************
+	//----------------------------------------------------------------------
+	function get_servicio(){
+	    $query = $this->db->get(self::TABLA_SERVICIO);
+	    $data = array();
+	    $data[]='Seleccione...';
+	    if($query->num_rows()>0){
+	        foreach($query->result_array() as $row){
+	            $data[$row['Cod_Servicio']]= $row[self::TIPO_RED];
+			}
+	        return $data;
+		}
+	}
+
+	function add_datos_tecnicos($datos_tecnicos){
+		$this->db->insert($this->tb_tecnica, $datos_tecnicos);
+		return $this->db->insert_id();
+	}
+
+	function add_datos_tecnicos_dest($datos_tecnicos_dest){
+		$this->db->insert($this->tb_tecnica, $datos_tecnicos_dest);
+		return $this->db->insert_id();
+	}
+
+	function obt_dato_tecnico($Id_Estacion){
+		$this->db->where('Id_Estacion_Origen', $Id_Estacion);
+		return $this->db->get($this->tb_tecnica);
+	}
+
+	function obt_dtec_tramite($id_operador){//var_Id_Tramite
+		$this->db->where('Id_Operador', $id_operador);
+		return $this->db->get($this->tb_tecnica);
+	}
+
+	function obt_last_id(){
+		$query = $this->db->get($this->tb_tecnica);
+		return $query->last_row();
+	}
+
+	function existe_tramite($var_Id_Tramite){
+		$this->db->where('Id_Tramite', $var_Id_Tramite);
+		return $this->db->get($this->tb_moviles);
+	}
+
+	function add_unidades_mov($datos_moviles){
+	$this->db->insert($this->tb_moviles, $datos_moviles);
+	return $this->db->insert_id();
+	}
+
+	function obt_unidades_mov($id_tram){
+	$this->db->where('Id_Tramite', $id_tram);
+	return $this->db->get($this->tb_moviles);
+	}
+
+	/*function get_last_tipoestacion(){
+		$this->db->order_by('Id_Estacion_Origen','asc');
+		$query = $this->db->get($this->tb_tecnica);
+		return $query->last_row();
+	}*/
+	function get_last_tipoestacion($tip_estac_ult_pap){
+		$this->db->order_by('Id_Estacion_Origen','asc');
+		$this->db->where('Tipo_Estacion',$tip_estac_ult_pap);
+		$query = $this->db->get($this->tb_tecnica);
+		return $query->last_row();
+	}
+
+	function obt_ultima_id_est_origen(){
+		$this->db->order_by('Id_Estacion_Origen','asc');
+		$query = $this->db->get($this->tb_tecnica);
+		return $query->last_row();
+	}
+
+	function encontrar_operador_tec($word_operador){
+		//$this->db->order_by('IdOperador','asc');
+		$this->db->like('IdOperador', $word_operador);
+		$this->db->or_like('RazonSocial', $word_operador);
+		$this->db->or_like('NomComercialOperador', $word_operador);
+		return $this->db->get($this->tb_tecnica);
+	}
+
+	function add_observaciones_tec($observados_tec){
+		$this->db->insert($this->tb_observacion_tec, $observados_tec);
+		return $this->db->insert_id();
+	}
+
+	function obt_observados_all_tec($Id_Observado_Tec){
+		$this->db->where('Id_Observado_Tec', $Id_Observado_Tec);
+		return $this->db->get($this->tb_observacion_tec);
+	}
+
+
+	//----------------------------------------------------------------------
+	//********************    Licencias      *******************************
+	//----------------------------------------------------------------------
+	function obt_licencias($limit = 10, $offset = 0){
+		return $this->db->get($this->tb_licencias, $limit, $offset);
+	}
+
+	function count_all_documentos(){
+		return $this->db->count_all($this->tb_licencias);
+	}
+//----------------------------------------------------------------------
+	//********************    obt_numeracion      *******************************
+	//----------------------------------------------------------------------
+function obt_numeracion($num){//var_Id_Tramite	//,$first_date,$second_date
+				/*$this->db->like('NOINICIAL', $id_operador);
+				$this->db->or_like('NOFINAL', $word_operador);
+				return $this->db->get($this->numeracion);*/
+		
+		return $this->db->query("SELECT * FROM numeracion WHERE NOINICIAL <= $num AND NOFINAL >= $num");
+		
+				//$this->db->where("'$num' BETWEEN 'NOINICIAL' AND 'NOFINAL'");
+				//return $this->db->get("numeracion");  
+
+				// $CI = get_instance();
+		     	//return $this->db->get("`$num` BETWEEN 'NOINICIAL' AND 'NOFINAL'");
+	}
+
+
+}
+?>

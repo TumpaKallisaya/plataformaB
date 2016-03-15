@@ -1,0 +1,581 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Falgun - Metro Style Bootstrap Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome.css">
+<!--[if IE 7]>
+            <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+        <![endif]-->
+<link href="css/chosen.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/theme-blue.css" rel="stylesheet">
+
+<!--[if IE 7]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie7.css" />
+        <![endif]-->
+<!--[if IE 8]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie8.css" />
+        <![endif]-->
+<!--[if IE 9]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie9.css" />
+        <![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href="ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+<!--============j avascript===========-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/accordion.nav.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script src="js/jquery.metadata.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/ios-orientationchange-fix.js"></script>
+<script type="text/javascript">
+            $(function () {
+                // validate signup form on keyup and submit
+                $("#signupForm").validate({
+                    rules: {
+                        firstname: "required",
+                        lastname: "required",
+                        username: {
+                            required: true,
+                            minlength: 2
+                        },
+                        password: {
+                            required: true,
+                            minlength: 5
+                        },
+                        confirm_password: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#password"
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        topic: {
+                            required: "#newsletter:checked",
+                            minlength: 2
+                        },
+                        agree: "required"
+                    },
+                    messages: {
+                        firstname: "Please enter your firstname",
+                        lastname: "Please enter your lastname",
+                        username: {
+                            required: "Please enter a username",
+                            minlength: "Your username must consist of at least 2 characters"
+                        },
+                        password: {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long"
+                        },
+                        confirm_password: {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long",
+                            equalTo: "Please enter the same password as above"
+                        },
+                        email: "Please enter a valid email address",
+                        agree: "Please accept our policy"
+                    }
+                });
+                // propose username by combining first- and lastname
+                $("#username").focus(function () {
+                    var firstname = $("#firstname").val();
+                    var lastname = $("#lastname").val();
+                    if (firstname && lastname && !this.value) {
+                        this.value = firstname + "." + lastname;
+                    }
+                });
+                //code to hide topic selection, disable for demo
+                var newsletter = $("#newsletter");
+                // newsletter topics are optional, hide at first
+                var inital = newsletter.is(":checked");
+                var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("disable-topic");
+                var topicInputs = topics.find("input").attr("disabled", !inital);
+                // show when newsletter is checked
+                newsletter.click(function () {
+                    topics[this.checked ? "removeClass" : "addClass"]("disable-topic");
+                    topicInputs.attr("disabled", !this.checked);
+                });
+            });
+            $(function () {
+                var container = $('div.error-container ');
+                // validate the form when it is submitted
+                var validator = $("#form2").validate({
+                    errorContainer: container,
+                    errorLabelContainer: $("ol", container),
+                    wrapper: 'li',
+                    meta: "validate"
+                });
+                $(".cancel").click(function () {
+                    validator.resetForm();
+                });
+            });
+        </script>
+</head>
+<body>
+<div class="layout">
+	<!-- Navbar================================================== -->
+	<div class="navbar navbar-inverse top-nav">
+		<div class="navbar-inner">
+			<div class="container">
+				<span class="home-link"><a href="index.html" class="icon-home"></a></span><a class="brand" href="./index.html"><img src="images/logo-falgun.png" width="103" height="50" alt="Falgun"></a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-th-large"></i> Forms <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements </a></li>
+								<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+								<li><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation</a></li>
+								<li><a href="form-wizard.html"><i class="icon-external-link"></i> Form Wizard </a></li>
+								<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor </a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-beaker"></i> Features <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+								<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+								<li><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+								<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+								<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+								<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+								<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-list-alt"></i> UI elements <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> Components &amp; UI Elements</a></li>
+								<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-file-alt"></i> Pages <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li class="dropdown-submenu"><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+								<div class="dropdown-menu">
+									<ul>
+										<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+										<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+										<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+										<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+										<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+									</ul>
+								</div>
+								</li>
+								<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+								<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+								<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+								<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-bar-chart"></i> Charts <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+								<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge Chart</a></li>
+							</ul>
+						</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-toolbar pull-right notification-nav">
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification dropdown-toggle" data-toggle="dropdown"><i class="icon-globe"><span class="notify-tip">30</span></i></a>
+							<div class="dropdown-menu pull-right ">
+								<span class="notify-h"> You have 20 notifications</span><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/notify-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere quam in nul<span class="notify-time"> 3 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class="icon-file"></i></span><span class="notification-intro"><strong>Files </strong>In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 8 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/user-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 3 Days Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class=" icon-envelope-alt"></i></span><span class="notification-intro"><strong>Message</strong> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 2 Weeks Ago </span></span></a>
+								<button class="btn btn-primary btn-large btn-block"> View All</button>
+							</div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification"><i class="icon-lock"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="leftbar leftbar-close clearfix">
+		<div class="admin-info clearfix">
+			<div class="admin-thumb">
+				<i class="icon-user"></i>
+			</div>
+			<div class="admin-meta">
+				<ul>
+					<li class="admin-username">Kamrujam Shohel</li>
+					<li><a href="#">Edit Profile</a></li>
+					<li><a href="#">View Profile </a><a href="#"><i class="icon-lock"></i> Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="left-nav clearfix">
+			<div class="left-primary-nav">
+				<ul id="myTab">
+					<li><a href="#main" class="icon-desktop" title="Dashboard"></a></li>
+					<li class="active"><a href="#forms" class="icon-th-large" title="Forms"></a></li>
+					<li><a href="#features" class="icon-beaker" title="Features"></a></li>
+					<li><a href="#ui-elements" class="icon-list-alt" title="UI&nbsp;Elements"></a></li>
+					<li><a href="#pages" class="icon-file-alt" title="Pages"></a></li>
+					<li><a href="#chart" class="icon-bar-chart" title="Chart"></a></li>
+				</ul>
+				<ul>
+					<li><a href="chat.html" class="icon-comments" title="Chat"></a></li>
+					<li><a href="text-editor.html" class="icon-pencil" title="WYSIWYG editor"></a></li>
+				</ul>
+			</div>
+			<div class="responsive-leftbar">
+				<i class="icon-list"></i>
+			</div>
+			<div class="left-secondary-nav tab-content">
+				<div class="tab-pane" id="main">
+					<h4 class="side-head">Dashboard</h4>
+					<div class="search-box">
+						<div class="input-append input-icon">
+							<input class="search-input" placeholder="Search..." type="text">
+							<i class=" icon-search"></i>
+							<button class="btn" type="button">Go!</button>
+						</div>
+					</div>
+					<ul class="metro-sidenav clearfix">
+						<li><span class="notify-tip">30</span><a href="#" class="brown"><i class="icon-user"></i><span>User</span></a></li>
+						<li><a href="#" class="orange"><i class="icon-cogs"></i><span>Settings</span></a></li>
+						<li><a href="#" class=" blue-violate"><i class="icon-lightbulb"></i><span>Support</span></a></li>
+						<li><a href="#" class=" magenta"><i class="icon-bar-chart"></i><span>Statistics</span></a></li>
+						<li><a href="#" class="green"><i class="icon-shopping-cart"></i><span>Orders</span></a></li>
+						<li><a href="#" class=" bondi-blue"><i class="icon-time"></i><span>Events</span></a></li>
+						<li><a href="#" class=" dark-yellow"><i class="icon-file-alt"></i><span>Post</span></a></li>
+						<li><a href="#" class=" blue"><i class="icon-copy"></i><span>Documents</span></a></li>
+					</ul>
+					<div class="side-widget">
+						<div class="board-widgets light-blue">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Bandwidth Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-cloud"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-info">
+									<div class="bar" style="width: 48%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">48%</i> 12000 MB / 25000 MB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets light-blue ">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Disk Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-hdd"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-success">
+									<div class="bar" style="width: 20%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">20%</i> 50GB / 250 GB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets gray">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Visitors</h4>
+								<a href="#" class="widget-settings"><i class="icon-group"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="line-min-chart min-chart">
+								</div>
+								<div class="stat-text">
+									26458 <i class="up icon-sort-up"></i> 5%
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane active" id="forms">
+					<h4 class="side-head">Forms</h4>
+					<ul id="nav" class="accordion-nav">
+						<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements <span class="notify-tip">50</span></a></li>
+						<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+						<li class="active"><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation<span>Quisque commodo lectus sit amet sem </span></a></li>
+						<li><a href="form-wizard.html"><i class="icon-external-link"></i> Wizard </a></li>
+						<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor <span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="features">
+					<h4 class="side-head">Features</h4>
+					<ul class="accordion-nav">
+						<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+						<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+						<li><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+						<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+						<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+						<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+						<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="ui-elements">
+					<h4 class="side-head">UI Elements</h4>
+					<ul class="accordion-nav">
+						<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> UI Components</a></li>
+						<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="pages">
+					<h4 class="side-head">Pages</h4>
+					<ul class="accordion-nav">
+						<li><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+						<ul>
+							<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+							<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+							<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+							<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+							<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+						</ul>
+						</li>
+						<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+						<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+						<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+						<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="chart">
+					<h4 class="side-head">Charts</h4>
+					<ul class="accordion-nav">
+						<li><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+						<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge<span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-wrapper">
+		<div class="container-fluid">
+			<div class="row-fluid ">
+				<div class="span12">
+					<div class="primary-head">
+						<h3 class="page-header">Form Validation</h3>
+						<ul class="top-right-toolbar">
+							<li><a data-toggle="dropdown" class="dropdown-toggle blue-violate" href="#" title="Users"><i class="icon-user"></i></a>
+							</li>
+							<li><a href="#" class="green" title="Upload"><i class=" icon-upload-alt"></i></a></li>
+							<li><a href="#" class="bondi-blue" title="Settings"><i class="icon-cogs"></i></a></li>
+						</ul>
+					</div>
+					<ul class="breadcrumb">
+						<li><a href="#" class="icon-home"></a><span class="divider "><i class="icon-angle-right"></i></span></li>
+						<li><a href="#">Library</a><span class="divider"><i class="icon-angle-right"></i></span></li>
+						<li class="active">Form</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets gray">
+						<div class="widget-head blue">
+							<h3> Sign Up Form</h3>
+						</div>
+						<div class="widget-container">
+							<div class="form-container grid-form form-background">
+								<form class="form-horizontal left-align" id="signupForm" method="get" action="#">
+									<div class="control-group">
+										<label class="control-label">First Name</label>
+										<div class="controls">
+											<input id="firstname" name="firstname" class="span12" type="text"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Last Name</label>
+										<div class="controls">
+											<input id="lastname" name="lastname" type="text" class="span12"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">User Name</label>
+										<div class="controls">
+											<input id="username" name="username" type="text" class="span12"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Password</label>
+										<div class="controls">
+											<input id="password" name="password" type="password" class="span12"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Confirm password</label>
+										<div class="controls">
+											<input id="confirm_password" name="confirm_password" type="password" class="span12"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Email</label>
+										<div class="controls">
+											<input id="email" name="email" type="email" class="span12"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Please agree to our policy</label>
+										<div class="controls">
+											<input type="checkbox" class="checkbox" id="agree" name="agree"/>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Monthly Newsletter</label>
+										<div class="controls">
+											<input type="checkbox" class="checkbox" id="newsletter" name="newsletter"/>
+										</div>
+									</div>
+									<fieldset id="newsletter_topics">
+										<div class="control-group">
+											<h6 class="legend-h">Topics (select at least two) - note: would be hidden when newsletter isn't selected, but is visible here for the demo</h6>
+											<div class="controls">
+												<label class="checkbox">
+												<input type="checkbox" id="topic_marketflash" value="marketflash" name="topic"/>
+												Marketflash </label>
+												<label class="checkbox">
+												<input type="checkbox" id="topic_fuzz" value="fuzz" name="topic"/>
+												Latest fuzz </label>
+												<label class="checkbox">
+												<input type="checkbox" id="topic_digester" value="digester" name="topic"/>
+												Mailing list digester </label>
+											</div>
+											<label class="error">Please select at least two topics you'd like to receive.</label>
+										</div>
+									</fieldset>
+									<div class="form-actions">
+										<button type="submit" class="btn btn-primary">Sign Up</button>
+										<button type="button" class="btn">Cancel</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets gray">
+						<div class="widget-head bondi-blue">
+							<h3>Validation error in container</h3>
+						</div>
+						<div class="widget-container">
+							<div class="form-container grid-form form-background">
+								<!-- our error container -->
+								<div class="error-container">
+									<h4>There are serious errors in your form submission, please see below for details.</h4>
+									<ol>
+										<li>
+										<label for="name" class="error">Please enter your full name</label>
+										</li>
+										<li>
+										<label for="emailID" class="error">Please enter your <b>email</b>
+										</label>
+										</li>
+										<li>
+										<label for="webUrl" class="error">Please enter your website address</label>
+										</li>
+										<li>
+										<label for="txt-msg" class="error">Please enter your message</label>
+										</li>
+										<li>
+										<label for="cv" class="error">Please select a document (doc, docx, txt, pdf)</label>
+										</li>
+										<li>
+										<label for="post-name" class="error">Please select your poistion</label>
+										</li>
+									</ol>
+								</div>
+								<form class="form-horizontal left-align cmxform" id="form2">
+									<div class="control-group">
+										<label class="control-label">Name</label>
+										<div class="controls">
+											<input id="name" type="text" placeholder="Name" name="name" class="span12 {validate:{required:true}}">
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Email</label>
+										<div class="controls">
+											<input id="emailID" type="text" placeholder="Email" name="email" class="span12 {validate:{required:true,email:true}}">
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Url</label>
+										<div class="controls">
+											<input type="text" id="webUrl" placeholder="url" name="url" class="span12 {validate:{required:true,url:true}}">
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Messages</label>
+										<div class="controls">
+											<textarea id="txt-msg" rows="3" class="span12 {validate:{required:true}}"></textarea>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">CV</label>
+										<div class="controls">
+											<input id="cv" name="cv" type="file" class="file-uniform {validate:{required:true,accept:'docx?|txt|pdf'}}">
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">Select Position</label>
+										<div class="controls">
+											<select id="post-name" name="position" title="Please select your fposition" class="span12 {validate:{required:true}}">
+												<option></option>
+												<option>Red</option>
+												<option>Blue</option>
+												<option>Yellow</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-actions">
+										<button type="submit" class="btn btn-extend">Submit</button>
+										<button type="button" class="btn btn-danger cancel">Cancel</button>
+									</div>
+								</form>
+								<div class="error-container">
+									<h4>There are serious errors in your form submission, please see details above the form!</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<p>
+			&copy; 2013 westilian
+		</p>
+	</div>
+	<div class="scroll-top">
+		<a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i>
+		</a>
+	</div>
+</div>
+</body>
+</html>

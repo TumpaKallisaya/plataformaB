@@ -1,0 +1,50 @@
+<?php
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Chatmodel extends Model{
+    
+    //devolverá todos aquellos mensajes que fueron escritos entre 2 segundos y el tiempo actual 
+    //pasandole el nick del usuario que hace la solicitud para que no le devuelva sus propios mensajes
+    public function getMensajes($de, $para, $timestamp){
+        $this->db->where('de=', $de);
+        $this->db->where('para', $para);
+        $this->db->where('timestamp >', $timestamp);
+        $this->db->order_by('fecha_envio', 'DESC');
+        $this->db->limit(10);
+        $query = $this->db->get('tb_chat');
+        
+        return $query->result_array();
+    }
+    
+    public function getMensajesHistoricos($de, $para){
+        $where1 = '(de="'.$de.'" or de="'.$para.'") and ('.'para="'.$para.'" or para="'.$de.'")';
+        
+        $this->db->where($where1);
+        $this->db->order_by('fecha_envio', 'DESC');
+        $this->db->limit(15);
+        $query = $this->db->get('tb_chat');
+        
+        return array_reverse($query->result_array());
+    }
+    
+    //añadiendo los mensajes que los distintos usuarios pongan en el chat
+    public function guardarMensaje($de, $para, $mensaje, $timestamp){
+        $data = array(
+            'de' => $de,
+            'para' => $para,
+            'mensaje' => $mensaje,
+            'timestamp' => $timestamp
+        );
+        $this->db->set('fecha_envio', 'NOW()', false);
+        
+        return $this->db->insert('tb_chat', $data);
+    }
+    
+    public function getListaContactos($usuario){
+        $this->db->where('usuario !=', $usuario);
+        $this->db->limit(5);
+        $query = $this->db->get('tb_usuarios');
+        
+        return $query->result_array();
+    }
+}

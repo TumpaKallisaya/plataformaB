@@ -1,0 +1,131 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+var enviarChat = function(mensaje, callback){
+    $.getJSON(baseURL+'index.php/chat/enviar_mensaje?mensaje='+mensaje+'&de='+$('#de').val()
+            +'&para='+$('#para').val(), function(data){
+                callback();
+            });
+}
+
+var append_chat_data = function(chat_data){
+    chat_data.forEach(function(data){
+        var usuario = $('#de').val();
+        console.log("aqui el de: "+data.de+" y el usuario: " + usuario);
+        console.log('data_id : '+ data.id + "ultimo id en el impupt: "+ document.getElementById('ultimomsjrec').value);
+        var dataid = parseInt(data.id);
+        var ultimomsjid;
+        if(document.getElementById('ultimomsjrec').value == ''){
+            ultimomsjid = 0;
+        }else{
+            ultimomsjid = parseInt(document.getElementById('ultimomsjrec').value);
+        }
+        if (dataid > ultimomsjid){
+            if(data.de === usuario){
+                var html = '<div class="row msg_container base_receive">';
+                html += '       <div class="col-md-2 col-xs-2 avatar">';
+              //  html += '           <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">';
+                html += ' <img src="'+baseURL+'images/logo2.png" width="50" height="50" class=" img-responsive " >';
+                html += '       </div>';
+                html += '       <div class="col-md-10 col-xs-10">';
+                html += '           <div class="messages msg_receive">';
+                html += '               <p>'+data.mensaje+'</p>';
+                html += '               <time datetime="2009-11-13T20:00">Lunes •     51 min</time>';
+                html += '           </div>';
+                html += '       </div>';
+                html += '   </div>';
+                document.getElementById('ultimomsjrec').value = data.id;
+            }else{
+                var html = '    <div class="row msg_container base_sent">';
+                html += '           <div class="col-md-10 col-xs-10">';
+                html += '               <div class="messages msg_sent">';
+                html += '                   <p>'+data.mensaje+'</p>';
+                html += '                   <time datetime="2009-11-13T20:00">Lunes • 51 min</time>';
+                html += '               </div>';
+                html += '           </div>';
+                html += '           <div class="col-md-2 col-xs-2 avatar">';
+                //html += '               <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">';
+                html += ' <img src="'+baseURL+'images/ope1.png" width="50" height="50" class=" img-responsive " >';
+                html += '           </div>';
+                html += '       </div>';
+                document.getElementById('ultimomsjrec').value = data.id;
+            }
+            $('#recibido').html($('#recibido').html()+html)
+            document.getElementById('scroll').scrollTop=9999999;
+        }
+        console.log('Ultimo id ingresado: '+document.getElementById('ultimomsjrec').value);
+    });
+    //$('#algo').animate({scrollTop:$('#algo').height()}, 1000);
+    
+}
+
+var update_chats = function(){
+    if(typeof(request_timestamp) == 'undefined' || request_timestamp == 0){
+        var offset = 60*15;
+        request_timestamp = parseInt(Date.now()/1000 - offset);
+    }
+    console.log('<?php echo base_url();?>index.php/chat/get_mensajes?de='+$('#de').val()+
+            '&para='+$('#para').val()+'&timestamp='+request_timestamp);
+    $.getJSON(baseURL+'index.php/chat/get_mensajes?de='+$('#de').val()+
+            '&para='+$('#para').val()+'&timestamp='+request_timestamp, function(data){
+                append_chat_data(data);
+                var newIndex = data.length-1;
+                if(typeof(data[newIndex])!='undefined'){
+                    request_timestamp = data[newIndex].timestamp;
+                }
+            });
+}
+
+var carga_mensajes = function(){
+    if(typeof(request_timestamp) == 'undefined' || request_timestamp == 0){
+        var offset = 60*15;
+        request_timestamp = parseInt(Date.now()/1000 - offset);
+    }
+    console.log(baseURL+'index.php/chat/get_mensajes_historicos?de='+$('#de').val()+
+            '&para='+$('#para').val());
+    $.getJSON(baseURL+'index.php/chat/get_mensajes_historicos?de='+$('#de').val()+
+            '&para='+$('#para').val(), function(data){
+                append_chat_data(data);
+            });
+}
+
+$('#submit').click(function(e){
+    e.preventDefault();
+
+    var $field = $('#mensaje');
+    var data = $field.val();
+
+    $field.addClass('disabled').attr('disabled', 'disabled');
+    enviarChat(data, function(){
+        $field.val('').removeClass('disabled').removeAttr('disabled');
+    });
+});
+
+$('li a').click(function(e) {
+    e.preventDefault();
+    
+    $('#ultimomsjrec').val('').removeClass('value').removeAttr('value');
+    var value = $(this).closest('li').data('value');
+    var usucont = "#usulist"+value;
+    var $field = $(usucont);
+    console.log("valorr: "+value + "   usuario: "+$field.val());
+    var $paraActual = $('#para').val();
+    if($paraActual != $field.val()){
+        document.getElementById('recibido').innerHTML="";
+        document.getElementById('para').value = $field.val();
+        carga_mensajes();
+    }
+    for (var i = 1; i < 5; i++){
+        console.log('Entra al for para bajar el scroll');
+        document.getElementById('scroll').scrollTop=9999999;
+    }
+    
+});
+
+setInterval(function(){
+    update_chats();
+}, 1500);

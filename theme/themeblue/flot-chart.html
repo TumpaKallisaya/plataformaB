@@ -1,0 +1,1015 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Falgun - Metro Style Bootstrap Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome.css">
+<!--[if IE 7]>
+            <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+        <![endif]-->
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/theme-blue.css" rel="stylesheet">
+
+<!--[if IE 7]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie7.css" />
+        <![endif]-->
+<!--[if IE 8]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie8.css" />
+        <![endif]-->
+<!--[if IE 9]>
+            <link rel="stylesheet" type="text/css" href="css/ie/ie9.css" />
+        <![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href="ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+<!--============j avascript===========-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.flot.js"></script>
+<script src="js/jquery.flot.selection.js"></script>
+<script src="js/excanvas.js"></script>
+<script src="js/jquery.flot.pie.js"></script>
+<script src="js/jquery.flot.stack.js"></script>
+<script src="js/jquery.flot.time.js"></script>
+<script src="js/jquery.flot.tooltip.js"></script>
+<script src="js/jquery.flot.resize.js"></script>
+<script src="js/accordion.nav.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/ios-orientationchange-fix.js"></script>
+<script type="text/javascript">
+            $(function () {
+                var data1 = GenerateSeries(0);
+                var data2 = GenerateSeries(100);
+                var data3 = GenerateSeries(200);
+                var dataset = [data1, data2, data3];
+                function GenerateSeries(added) {
+                    var data = [];
+                    var start = 100 + added;
+                    var end = 200 + added;
+                    for (i = 1; i <= 100; i++) {
+                        var d = Math.floor(Math.random() * (end - start + 1) + start);
+                        data.push([i, d]);
+                        start++;
+                        end++;
+                    }
+                    return data;
+                }
+                var options = {
+                    series: {
+                        lines: {
+                            show: true,
+                            fill: true
+                        },
+                        points: {
+                            show: true,
+                            lineWidth: 2,
+                            fill: true,
+                            fillColor: "#ffffff",
+                            symbol: "circle",
+                            radius: 2,
+                        },
+                        shadowSize: 0,
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1
+                    },
+                    colors: ["#b086c3", "#ea701b"],
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    },
+                    legend: {
+                        position: 'nw',
+                        labelBoxBorderColor: "#000000",
+                        container: $("#area-chart #legendPlaceholderArea"),
+                        noColumns: 0
+                    }
+                };
+                function ToggleSeries() {
+                    var d = [];
+                    $("#area-chart input").each(function () {
+                        if ($(this).is(":checked")) {
+                            var seqence = $(this).attr("id").replace("cbdata", "");
+                            d.push({
+                                label: "data" + seqence,
+                                data: dataset[seqence - 1]
+                            });
+                        }
+                    });
+                    $.plot($("#area-chart #area-chartContainer"), d, options);
+                }
+                $("#area-chart input").change(function () {
+                    ToggleSeries();
+                });
+                ToggleSeries();
+            });
+        </script>
+<script type="text/javascript">
+            var data7_1 = [
+                [1354586000000, 153],
+                [1354587000000, 658],
+                [1354588000000, 198],
+                [1354589000000, 663],
+                [1354590000000, 801],
+                [1354591000000, 1080],
+                [1354592000000, 353],
+                [1354593000000, 749],
+                [1354594000000, 523],
+                [1354595000000, 258],
+                [1354596000000, 688],
+                [1354597000000, 364]
+            ];
+            var data7_2 = [
+                [1354586000000, 53],
+                [1354587000000, 65],
+                [1354588000000, 98],
+                [1354589000000, 83],
+                [1354590000000, 80],
+                [1354591000000, 108],
+                [1354592000000, 120],
+                [1354593000000, 74],
+                [1354594000000, 23],
+                [1354595000000, 79],
+                [1354596000000, 88],
+                [1354597000000, 36]
+            ];
+            $(function () {
+                $.plot($("#visitors-chart #visitors-container"), [{
+                    data: data7_1,
+                    label: "Page View",
+                    lines: {
+                        fill: true
+                    }
+                }, {
+                    data: data7_2,
+                    label: "Online User",
+                    points: {
+                        show: true
+                    },
+                    lines: {
+                        show: true
+                    },
+                    yaxis: 2
+                }
+                ],
+                {
+                    series: {
+                        lines: {
+                            show: true,
+                            fill: false
+                        },
+                        points: {
+                            show: true,
+                            lineWidth: 2,
+                            fill: true,
+                            fillColor: "#ffffff",
+                            symbol: "circle",
+                            radius: 5,
+                        },
+                        shadowSize: 0,
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1
+                    },
+                    colors: ["#b086c3", "#ea701b"],
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    },
+                    xaxis: {
+                        mode: "time",
+                        timeformat: "%0m/%0d %0H:%0M"
+                    },
+                    yaxes: [{
+                        /* First y axis */
+                    }, {
+                        /* Second y axis */
+                        position: "right" /* left or right */
+                    }]
+                }
+                );
+            });
+        </script>
+<script type="text/javascript">
+            $(function () {
+                var data1 = [];
+                var totalPoints = 300;
+                function GetData() {
+                    data1.shift();
+                    while (data1.length < totalPoints) {
+                        var prev = data1.length > 0 ? data1[data1.length - 1] : 50;
+                        var y = prev + Math.random() * 10 - 5;
+                        y = y < 0 ? 0 : (y > 100 ? 100 : y);
+                        data1.push(y);
+                    }
+                    var result = [];
+                    for (var i = 0; i < data1.length; ++i) {
+                        result.push([i, data1[i]])
+                    }
+                    return result;
+                }
+                var updateInterval = 100;
+                var plot = $.plot($("#reatltime-chart #reatltime-chartContainer"), [
+                GetData()], {
+                    series: {
+                        lines: {
+                            show: true,
+                            fill: true
+                        },
+                        shadowSize: 0
+                    },
+                    yaxis: {
+                        min: 0,
+                        max: 100,
+                        ticks: 10
+                    },
+                    xaxis: {
+                        show: false
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1
+                    },
+                    colors: ["#b086c3"],
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    }
+                });
+                function update() {
+                    plot.setData([GetData()]);
+                    plot.draw();
+                    setTimeout(update, updateInterval);
+                }
+                update();
+            });
+        </script>
+<script type="text/javascript">
+            $(function () {
+                var data = [{
+                    label: "Paid Signup",
+                    data: 60
+                }, {
+                    label: "Free Signup",
+                    data: 30
+                }, {
+                    label: "Guest Signup",
+                    data: 10
+                }];
+                var options = {
+                    series: {
+                        pie: {
+                            show: true
+                        }
+                    },
+                    legend: {
+                        show: true
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true
+                    },
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    }
+                };
+                $.plot($("#pie-chart #pie-chartContainer"), data, options);
+            });
+        </script>
+<script type="text/javascript">
+            $(function () {
+                var data = [{
+                    label: "Premium Member",
+                    data: 40
+                }, {
+                    label: "Gold Member",
+                    data: 20
+                }, {
+                    label: "Platinum Member",
+                    data: 10
+                }, {
+                    label: "Silver Member",
+                    data: 30
+                }];
+                var options = {
+                    series: {
+                        pie: {
+                            show: true,
+                            innerRadius: 0.5,
+                            show: true
+                        }
+                    },
+                    legend: {
+                        show: true
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true
+                    },
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    }
+                };
+                $.plot($("#pie-chart-donut #pie-donutContainer"), data, options);
+            });
+        </script>
+<script type="text/javascript">
+            $(function () {
+                var data24Hours = [
+                    [0, 601],
+                    [1, 520],
+                    [2, 337],
+                    [3, 261],
+                    [4, 157],
+                    [5, 78],
+                    [6, 58],
+                    [7, 48],
+                    [8, 54],
+                    [9, 38],
+                    [10, 88],
+                    [11, 214],
+                    [12, 364],
+                    [13, 449],
+                    [14, 558],
+                    [15, 282],
+                    [16, 379],
+                    [17, 429],
+                    [18, 518],
+                    [19, 470],
+                    [20, 330],
+                    [21, 245],
+                    [22, 358],
+                    [23, 74]
+                ];
+                var data48Hours = [
+                    [0, 445],
+                    [1, 592],
+                    [2, 738],
+                    [3, 532],
+                    [4, 234],
+                    [5, 143],
+                    [6, 147],
+                    [7, 63],
+                    [8, 64],
+                    [9, 43],
+                    [10, 86],
+                    [11, 201],
+                    [12, 315],
+                    [13, 397],
+                    [14, 512],
+                    [15, 281],
+                    [16, 360],
+                    [17, 479],
+                    [18, 425],
+                    [19, 453],
+                    [20, 422],
+                    [21, 355],
+                    [22, 340],
+                    [23, 801]
+                ];
+                var dataDifference = [
+                    [23, -727],
+                    [22, 18],
+                    [21, -110],
+                    [20, -92],
+                    [19, 17],
+                    [18, 93],
+                    [17, -50],
+                    [16, 19],
+                    [15, 1],
+                    [14, 46],
+                    [13, 52],
+                    [12, 49],
+                    [11, 13],
+                    [10, 2],
+                    [9, -5],
+                    [8, -10],
+                    [7, -15],
+                    [6, -89],
+                    [5, -65],
+                    [4, -77],
+                    [3, -271],
+                    [2, -401],
+                    [1, -72],
+                    [0, 156]
+                ];
+                var ticks = [
+                    [0, "22h"],
+                    [1, ""],
+                    [2, "00h"],
+                    [3, ""],
+                    [4, "02h"],
+                    [5, ""],
+                    [6, "04h"],
+                    [7, ""],
+                    [8, "06h"],
+                    [9, ""],
+                    [10, "08h"],
+                    [11, ""],
+                    [12, "10h"],
+                    [13, ""],
+                    [14, "12h"],
+                    [15, ""],
+                    [16, "14h"],
+                    [17, ""],
+                    [18, "16h"],
+                    [19, ""],
+                    [20, "18h"],
+                    [21, ""],
+                    [22, "20h"],
+                    [23, ""]
+                ];
+                var data = [{
+                    label: "Last 24 Hours",
+                    data: data24Hours,
+                    lines: {
+                        show: true,
+                        fill: true
+                    },
+                    points: {
+                        show: true
+                    }
+                }, {
+                    label: "Last 48 Hours",
+                    data: data48Hours,
+                    lines: {
+                        show: true
+                    },
+                    points: {
+                        show: true
+                    }
+                }, {
+                    label: "Difference",
+                    data: dataDifference,
+                    bars: {
+                        show: true
+                    }
+                }];
+                var options = {
+                    xaxis: {
+                        ticks: ticks
+                    },
+                    series: {
+                        shadowSize: 0
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1
+                    },
+                    colors: ["#b086c3", "#ea701b"],
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    },
+                    legend: {
+                        labelBoxBorderColor: "#000000",
+                        container: $("#legendcontainer26"),
+                        noColumns: 0
+                    },
+                };
+                var plot = $.plot($("#combine-chart #combine-chartContainer"),
+                data, options);
+            });
+        </script>
+<script type="text/javascript">
+            $(function () {
+                var data1 = GenerateSeries(0);
+                var data2 = GenerateSeries(100);
+                var data3 = GenerateSeries(200);
+                var dataset = [data1, data2, data3];
+                function GenerateSeries(added) {
+                    var data = [];
+                    var start = 100 + added;
+                    var end = 200 + added;
+                    for (i = 1; i <= 100; i++) {
+                        var d = Math.floor(Math.random() * (end - start + 1) + start);
+                        data.push([i, d]);
+                        start++;
+                        end++;
+                    }
+                    return data;
+                }
+                var options = {
+                    series: {
+                        stack: true,
+                        shadowSize: 0
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1
+                    },
+                    legend: {
+                        position: 'nw',
+                        labelBoxBorderColor: "#000000",
+                        container: $("#bar-chart #legendPlaceholder20"),
+                        noColumns: 0
+                    }
+                };
+                var plot;
+                function ToggleSeries() {
+                    var d = [];
+                    $("#toggle-chart input[type='checkbox']").each(function () {
+                        if ($(this).is(":checked")) {
+                            var seqence = $(this).attr("id").replace("cbdata", "");
+                            d.push({
+                                label: "data" + seqence,
+                                data: dataset[seqence - 1]
+                            });
+                        }
+                    });
+                    options.series.lines = {};
+                    options.series.bars = {};
+                    $("#toggle-chart input[type='radio']").each(function () {
+                        if ($(this).is(":checked")) {
+                            if ($(this).val() == "line") {
+                                options.series.lines = {
+                                    fill: true
+                                };
+                            } else {
+                                options.series.bars = {
+                                    show: true
+                                };
+                            }
+                        }
+                    });
+                    $.plot($("#toggle-chart #toggle-chartContainer"), d, options);
+                }
+                $("#toggle-chart input").change(function () {
+                    ToggleSeries();
+                });
+                ToggleSeries();
+            });
+        </script>
+</head>
+<body>
+<div class="layout">
+	<!-- Navbar================================================== -->
+	<div class="navbar navbar-inverse top-nav">
+		<div class="navbar-inner">
+			<div class="container">
+				<span class="home-link"><a href="index.html" class="icon-home"></a></span><a class="brand" href="./index.html"><img src="images/logo-falgun.png" width="103" height="50" alt="Falgun"></a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-th-large"></i> Forms <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements </a></li>
+								<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+								<li><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation</a></li>
+								<li><a href="form-wizard.html"><i class="icon-external-link"></i> Form Wizard </a></li>
+								<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor </a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-beaker"></i> Features <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+								<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+								<li><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+								<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+								<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+								<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+								<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-list-alt"></i> UI elements <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> Components &amp; UI Elements</a></li>
+								<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-file-alt"></i> Pages <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li class="dropdown-submenu"><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+								<div class="dropdown-menu">
+									<ul>
+										<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+										<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+										<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+										<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+										<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+									</ul>
+								</div>
+								</li>
+								<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+								<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+								<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+								<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-bar-chart"></i> Charts <b class="icon-angle-down"></b></a>
+						<div class="dropdown-menu">
+							<ul>
+								<li><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+								<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge Chart</a></li>
+							</ul>
+						</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-toolbar pull-right notification-nav">
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification dropdown-toggle" data-toggle="dropdown"><i class="icon-globe"><span class="notify-tip">30</span></i></a>
+							<div class="dropdown-menu pull-right ">
+								<span class="notify-h"> You have 20 notifications</span><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/notify-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere quam in nul<span class="notify-time"> 3 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class="icon-file"></i></span><span class="notification-intro"><strong>Files </strong>In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 8 Hours Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><img src="images/user-thumb.png" width="50" height="50" alt="user-thumb"></span><span class="notification-intro"> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 3 Days Ago </span></span></a><a class="msg-container clearfix"><span class="notification-thumb"><i class=" icon-envelope-alt"></i></span><span class="notification-intro"><strong>Message</strong> In hac habitasse platea dictumst. Aliquam posuere<span class="notify-time"> 2 Weeks Ago </span></span></a>
+								<button class="btn btn-primary btn-large btn-block"> View All</button>
+							</div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<div class="dropdown">
+							<a class="btn btn-notification"><i class="icon-lock"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="leftbar leftbar-close clearfix">
+		<div class="admin-info clearfix">
+			<div class="admin-thumb">
+				<i class="icon-user"></i>
+			</div>
+			<div class="admin-meta">
+				<ul>
+					<li class="admin-username">Kamrujam Shohel</li>
+					<li><a href="#">Edit Profile</a></li>
+					<li><a href="#">View Profile </a><a href="#"><i class="icon-lock"></i> Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="left-nav clearfix">
+			<div class="left-primary-nav">
+				<ul id="myTab">
+					<li><a href="#main" class="icon-desktop" title="Dashboard"></a></li>
+					<li><a href="#forms" class="icon-th-large" title="Forms"></a></li>
+					<li><a href="#features" class="icon-beaker" title="Features"></a></li>
+					<li><a href="#ui-elements" class="icon-list-alt" title="UI&nbsp;Elements"></a></li>
+					<li><a href="#pages" class="icon-file-alt" title="Pages"></a></li>
+					<li class="active"><a href="#chart" class="icon-bar-chart" title="Chart"></a></li>
+				</ul>
+				<ul>
+					<li><a href="chat.html" class="icon-comments" title="Chat"></a></li>
+					<li><a href="text-editor.html" class="icon-pencil" title="WYSIWYG editor"></a></li>
+				</ul>
+			</div>
+			<div class="responsive-leftbar">
+				<i class="icon-list"></i>
+			</div>
+			<div class="left-secondary-nav tab-content">
+				<div class="tab-pane" id="main">
+					<h4 class="side-head">Dashboard</h4>
+					<div class="search-box">
+						<div class="input-append input-icon">
+							<input class="search-input" placeholder="Search..." type="text">
+							<i class=" icon-search"></i>
+							<button class="btn" type="button">Go!</button>
+						</div>
+					</div>
+					<ul class="metro-sidenav clearfix">
+						<li><span class="notify-tip">30</span><a href="#" class="brown"><i class="icon-user"></i><span>User</span></a></li>
+						<li><a href="#" class="orange"><i class="icon-cogs"></i><span>Settings</span></a></li>
+						<li><a href="#" class=" blue-violate"><i class="icon-lightbulb"></i><span>Support</span></a></li>
+						<li><a href="#" class=" magenta"><i class="icon-bar-chart"></i><span>Statistics</span></a></li>
+						<li><a href="#" class="green"><i class="icon-shopping-cart"></i><span>Orders</span></a></li>
+						<li><a href="#" class=" bondi-blue"><i class="icon-time"></i><span>Events</span></a></li>
+						<li><a href="#" class=" dark-yellow"><i class="icon-file-alt"></i><span>Post</span></a></li>
+						<li><a href="#" class=" blue"><i class="icon-copy"></i><span>Documents</span></a></li>
+					</ul>
+					<div class="side-widget">
+						<div class="board-widgets light-blue">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Bandwidth Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-cloud"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-info">
+									<div class="bar" style="width: 48%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">48%</i> 12000 MB / 25000 MB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets light-blue ">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Disk Usage</h4>
+								<a href="#" class="widget-settings"><i class="icon-hdd"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="progress progress-striped active min progress-success">
+									<div class="bar" style="width: 20%;">
+									</div>
+								</div>
+								<div class="stat-text progress-stat">
+									<i class="progres-percent">20%</i> 50GB / 250 GB
+								</div>
+							</div>
+						</div>
+						<div class="board-widgets gray">
+							<div class="board-widgets-head clearfix">
+								<h4 class="pull-left">Visitors</h4>
+								<a href="#" class="widget-settings"><i class="icon-group"></i></a>
+							</div>
+							<div class="board-widgets-content">
+								<div class="line-min-chart min-chart">
+								</div>
+								<div class="stat-text">
+									 26458 <i class="up icon-sort-up"></i> 5%
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="forms">
+					<h4 class="side-head">Forms</h4>
+					<ul id="nav" class="accordion-nav">
+						<li><a href="form-elements.html"><i class="icon-list-alt"></i> Form Elements <span class="notify-tip">50</span></a></li>
+						<li><a href="form-components.html"><i class="icon-th"></i> Form Components </a></li>
+						<li><a href="form-validation.html"><i class="icon-ok-circle"></i> Form Validation<span>Quisque commodo lectus sit amet sem </span></a></li>
+						<li><a href="form-wizard.html"><i class="icon-external-link"></i> Wizard </a></li>
+						<li><a href="text-editor.html"><i class="icon-pencil"></i> WYSIWYG editor <span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="features">
+					<h4 class="side-head">Features</h4>
+					<ul class="accordion-nav">
+						<li><a href="tables.html"><i class="icon-table"></i> Basic Tables</a></li>
+						<li><a href="table-cloth.html"><i class="icon-table"></i> Tables-Theme</a></li>
+						<li><a href="data-tables.html"><i class=" icon-th"></i> Data Tables</a></li>
+						<li><a href="grid.html"><i class=" icon-columns"></i> Grid</a></li>
+						<li><a href="typography.html"><i class=" icon-font"></i> Typography</a></li>
+						<li><a href="calendar.html"><i class=" icon-calendar"></i> Calendar</a></li>
+						<li><a href="file-manager.html"><i class=" icon-folder-open"></i> File Manager</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="ui-elements">
+					<h4 class="side-head">UI Elements</h4>
+					<ul class="accordion-nav">
+						<li><a href="components-widgets.html"><i class=" icon-list-alt"></i> UI Components</a></li>
+						<li><a href="buttons-icons.html"><i class=" icon-th-large"></i> Buttons &amp; Icons</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane" id="pages">
+					<h4 class="side-head">Pages</h4>
+					<ul class="accordion-nav">
+						<li><a href="#"><i class="icon-minus-sign"></i> Error Pages</a>
+						<ul>
+							<li><a href="page-403.html"><i class=" icon-file-alt"></i> 403 Error Page</a></li>
+							<li><a href="page-404.html"><i class=" icon-file-alt"></i> 404 Error Page</a></li>
+							<li><a href="page-405.html"><i class=" icon-file-alt"></i> 405 Error Page</a></li>
+							<li><a href="page-500.html"><i class=" icon-file-alt"></i> 500 Error Page</a></li>
+							<li><a href="page-503.html"><i class=" icon-file-alt"></i> 503 Error Page</a></li>
+						</ul>
+						</li>
+						<li><a href="login.html"><i class=" icon-unlock"></i> Login Page</a></li>
+						<li><a href="gallery.html"><i class=" icon-picture"></i> Gallery</a></li>
+						<li><a href="pricing.html"><i class="icon-money"></i> Pricing Page</a></li>
+						<li><a href="chat.html"><i class="icon-comments"></i> Chat Page</a></li>
+					</ul>
+				</div>
+				<div class="tab-pane active" id="chart">
+					<h4 class="side-head">Charts</h4>
+					<ul class="accordion-nav">
+						<li class="active"><a href="flot-chart.html"><i class="icon-bar-chart"></i> Flot Charts</a></li>
+						<li><a href="google-chart.html"><i class="icon-google-plus-sign"></i> Goolge<span>Quisque commodo lectus sit amet sem </span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-wrapper">
+		<div class="container-fluid">
+			<div class="row-fluid ">
+				<div class="span12">
+					<div class="primary-head">
+						<h3 class="page-header">Flot Chart</h3>
+						<ul class="top-right-toolbar">
+							<li><a data-toggle="dropdown" class="dropdown-toggle blue-violate" href="#" title="Users"><i class="icon-user"></i></a>
+							</li>
+							<li><a href="#" class="green" title="Upload"><i class=" icon-upload-alt"></i></a></li>
+							<li><a href="#" class="bondi-blue" title="Settings"><i class="icon-cogs"></i></a></li>
+						</ul>
+					</div>
+					<ul class="breadcrumb">
+						<li><a href="#" class="icon-home"></a><span class="divider "><i class="icon-angle-right"></i></span></li>
+						<li><a href="#">Library</a><span class="divider"><i class="icon-angle-right"></i></span></li>
+						<li class="active">Chart</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header">Visitors Chart</h4>
+							</div>
+							<div>
+								<div id="visitors-chart">
+									<div id="visitors-container" style="width: 100%;height:300px; text-align: center; margin:0 auto;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header">Area Chart</h4>
+							</div>
+							<div>
+								<div id="area-chart">
+									<div class="clearfix">
+										<form class="form-horizontal chart-control">
+											<div class="control-group pull-left">
+												<label class="control-label">Toggle series :</label>
+												<div class="controls">
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata1" checked>
+													data1</label>
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata2" checked>
+													data2 </label>
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata3" checked>
+													data3 </label>
+												</div>
+											</div>
+										</form>
+										<div id="legendPlaceholderArea" class="pull-right">
+										</div>
+									</div>
+									<div id="area-chartContainer" style="width: 100%;height:300px;" class="clearfix">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header">Realtime Chart</h4>
+							</div>
+							<div>
+								<div id="reatltime-chart">
+									<div id="reatltime-chartContainer" style="width:100%;height:300px; text-align: center; margin:0 auto;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="content-widgets light-gray">
+						<div class="widget-head blue">
+							<h3>Member Signup</h3>
+						</div>
+						<div class="widget-container">
+							<div id="pie-chart" class="pie-chart">
+								<div id="pie-chartContainer" style="width: 100%;height:400px; text-align: left;">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="content-widgets light-gray">
+						<div class="widget-head blue">
+							<h3>Member Signup Donut Chart</h3>
+						</div>
+						<div class="widget-container">
+							<div id="pie-chart-donut" class="pie-chart">
+								<div id="pie-donutContainer" style="width: 100%;height:400px; text-align: left;">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header">Combine Chart</h4>
+							</div>
+							<div>
+								<div id="combine-chart">
+									<div id="legendcontainer26" class="legend-block">
+									</div>
+									<div id="combine-chartContainer" style="width: 100%;height:300px; text-align: center; margin:0 auto;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="content-widgets">
+						<div>
+							<div class="widget-header-block">
+								<h4 class="widget-header">Toggle Chart</h4>
+							</div>
+							<div>
+								<div id="toggle-chart">
+									<div class="clearfix">
+										<form class="form-horizontal pull-left chart-control">
+											<div class="control-group">
+												<label class="control-label">Chart Type :</label>
+												<div class="controls">
+													<label class="checkbox inline">
+													<input id="chartType1" checked name="ct" type="radio" value="line"/>
+													Line Chart</label>
+													<label class="checkbox inline">
+													<input id="chartType2" name="ct" type="radio" value="bar"/>
+													Bar Chart </label>
+												</div>
+											</div>
+										</form>
+										<form class="form-horizontal chart-control pull-right chart-control">
+											<div class="control-group ">
+												<label class="control-label"> Toggle series :</label>
+												<div class="controls">
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata1" checked>
+													data1</label>
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata2" checked>
+													data2 </label>
+													<label class="checkbox inline">
+													<input type="checkbox" id="cbdata3" checked>
+													data3 </label>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div id="legendPlaceholder20">
+									</div>
+									<div id="toggle-chartContainer" style="width: 100%;height:300px; text-align: left;">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<p>
+			 &copy; 2013 westilian
+		</p>
+	</div>
+	<div class="scroll-top">
+		<a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+	</div>
+</div>
+</body>
+</html>
