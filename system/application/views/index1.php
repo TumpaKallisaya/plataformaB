@@ -808,15 +808,13 @@ Tarija: Tel. 664-4136 <br>
                         <div class="input-group">
                             <input id="id_usuario_de" type="text" hidden="true" value="<?php echo $id_usuario;?>"/>
                             <input id="id_usuario_para" type="text" hidden="true"/>
-                            <div class="data">
-                                <i class="fa fa-paperclip"></i>
-                            </div>
-
-                            <input id="mensaje" type="text" class="form-control input-sm chat_input" placeholder="Escribe tu mensaje aqui..." />
+                            <span class="input-group-btn">
+                                <img src="<?php echo base_url();?>images/cargar.png" class="img-circle-pk"/>
+                            </span>
+                            <input style="margin-top:10px;" id="mensaje" type="text" class="form-control input-sm chat_input" placeholder="Escribe tu mensaje aqui..." />
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-sm" id="submit">Enviar</button>
                             </span>
-
                         </div>
                     </div>
                     </div>
