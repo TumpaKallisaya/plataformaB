@@ -9,32 +9,35 @@ class Chat extends Controller{
         $this->load->model('chatmodel');
     }
     
-    public function enviar_mensaje(){
+    public function enviar_chat(){
         //$mensaje = $this->input->get('mensaje', null);
         parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
         $mensaje = $_GET['mensaje'];
         $id_usuario_de = $this->input->get('id_usuario_de', '');
-        $id_usuario_para = $this->input->get('id_usuario_para', '');
+        $id_tema = $this->input->get('id_tema', '');
         $timestamp = time();
         
-        $this->chatmodel->guardarMensaje($id_usuario_de, $id_usuario_para, $mensaje, $timestamp);
-        $this->_setOutput($mensaje);
+        $chatGuardado = $this->chatmodel->guardarChat($id_usuario_de, $id_tema, $mensaje, $timestamp);
+        $this->_setOutput($chatGuardado);
     }
     
-    public function get_mensajes(){
+    public function get_chats_constantes(){
         parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
-        $id_usuario_de = $_GET['id_usuario_de'];
-        $id_usuario_para = $this->input->get('id_usuario_para', '');
+        $id_usuario = $_GET['id_usuario_de'];
+        $id_tema = $_GET['id_tema'];
         $timestamp = $this->input->get('timestamp', null);
-        $mensajes = $this->chatmodel->getMensajes($id_usuario_de, $id_usuario_para, $timestamp);
+        
+        $mensajes = $this->chatmodel->getChatsConstantes($id_usuario, $id_tema, $timestamp);
         $this->_setOutput($mensajes);
     }
     
-    public function get_mensajes_historicos(){
+    public function get_chats_recientes(){
         parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
-        $id_usuario_de = $_GET['id_usuario_de'];
-        $id_usuario_para = $_GET['id_usuario_para'];
-        $mensajes = $this->chatmodel->getMensajesHistoricos($id_usuario_de, $id_usuario_para);
+        $id_usuario = $_GET['id_usuario_de']; //Ya no es necesario
+        $id_tema = $_GET['id_tema'];
+        $es_att = $this->input->get('es_att', ''); //Ya no es necesario
+        
+        $mensajes = $this->chatmodel->getChatsRecientesAttOpe($id_usuario, $id_tema);
         $this->_setOutput($mensajes);
     }
     
@@ -85,6 +88,15 @@ class Chat extends Controller{
         
         $listaTemasOpe = $this->chatmodel->getLisTemAbiOpe($id_usuario, $ultimo_tema);
         $this->_setOutput($listaTemasOpe);
+    }
+    
+    public function get_tema_sel(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario = $_GET['id_usuario_de']; //Ya no es necesario
+        $id_tema = $_GET['id_tema'];
+        
+        $tema = $this->chatmodel->getTemaSel($id_tema);
+        $this->_setOutput($tema);
     }
     
 }

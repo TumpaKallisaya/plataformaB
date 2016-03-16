@@ -791,13 +791,15 @@ Tarija: Tel. 664-4136 <br>
                     <div class="panel panel-default">
                     <div class="panel-heading top-bar">
                         <div class="col-md-8 col-xs-8">
-                            <h3 class="panel-title" id="tituloTema"> Chat - ATT [Usuario - <?php echo $usuario;?>]</h3>
+                            <input id="idTemaCargado" type="text" hidden="true" />
+                            <!--<h3 class="panel-title" id="tituloTema"> Chat - ATT [Usuario - <?php //echo $usuario;?>]</h3>-->
+                            <h3 class="panel-title" id="temaConversacion"> Bienvenidos al Chat de la ATT!</h3>
                             <div id="tittema"></div>
                         </div>
                     </div>
 
                     <div class="panel-body msg_container_base" id="scroll">
-                        <input id="ultimomsjrec" type="text" hidden="true" />
+                        <input id="ultimoChatRec" type="text" hidden="true" />
                         <div id="recibido">
                         </div>
                     </div>

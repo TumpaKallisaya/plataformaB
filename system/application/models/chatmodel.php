@@ -5,36 +5,36 @@ class Chatmodel extends Model{
     
     //devolverá todos aquellos mensajes que fueron escritos entre 2 segundos y el tiempo actual 
     //pasandole el nick del usuario que hace la solicitud para que no le devuelva sus propios mensajes
-    public function getMensajes($id_usuario_de, $id_usuario_para, $timestamp){
-        $this->db->where('id_usuario_de', $id_usuario_de);
-        $this->db->where('id_usuario_para', $id_usuario_para);
-        $this->db->where('timestamp >', $timestamp);
-        $this->db->order_by('fecha_envio', 'DESC');
-        //$this->db->limit(10);
-        $query = $this->db->get('tb_chat');
+    public function getChatsConstantes($id_usuario, $id_tema, $timestamp){
+        $where = 'c.id_tema ='.$id_tema.' and c.timestamp > '.$timestamp;
+        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.fecha_envio, ude.descripcion_usuario as dde');
+        $this->db->from('tb_chat c');
+        $this->db->join('tb_usuarios ude', 'c.id_usuario_de = ude.id_usuario');
+        $this->db->where($where);
+        $this->db->order_by('c.fecha_envio', 'DESC');
+        $query = $this->db->get();
         
         return $query->result_array();
     }
     
-    public function getMensajesHistoricos($id_usuario_de, $id_usuario_para){
-        $where1 = '(id_usuario_de="'.$id_usuario_de.'" or id_usuario_de="'.$id_usuario_para.'") and ('.'id_usuario_para="'.$id_usuario_para.'" or id_usuario_para="'.$id_usuario_de.'")';
-        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.id_usuario_para, c.mensaje, c.fecha_envio, ude.descripcion_usuario as dde, upa.descripcion_usuario as dpa');
+    public function getChatsRecientesAttOpe($id_usuario, $id_tema){
+        $where = 'c.id_tema ='.$id_tema;
+        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.fecha_envio, ude.descripcion_usuario as dde');
         $this->db->from('tb_chat c');
         $this->db->join('tb_usuarios ude', 'c.id_usuario_de = ude.id_usuario');
-        $this->db->join('tb_usuarios upa', 'c.id_usuario_para = upa.id_usuario');
-        $this->db->where($where1);
-        $this->db->order_by('fecha_envio', 'DESC');
-        $this->db->limit(15);
+        $this->db->where($where);
+        $this->db->order_by('c.fecha_envio', 'DESC');
+        $this->db->limit(20);
         $query = $this->db->get();
         
         return array_reverse($query->result_array());
     }
     
     //añadiendo los mensajes que los distintos usuarios pongan en el chat
-    public function guardarMensaje($id_usuario_de, $id_usuario_para, $mensaje, $timestamp){
+    public function guardarChat($id_usuario_de, $id_tema, $mensaje, $timestamp){
         $data = array(
+            'id_tema' => $id_tema,
             'id_usuario_de' => $id_usuario_de,
-            'id_usuario_para' => $id_usuario_para,
             'mensaje' => $mensaje,
             'timestamp' => $timestamp
         );
@@ -173,4 +173,10 @@ class Chatmodel extends Model{
         return $query->result_array();
     }
     
+    public function getTemaSel($id_tema){
+        $this->db->where('id', $id_tema);
+        $query = $this->db->get('tb_chat_tema');
+        
+        return $query->row();
+    }
 }
