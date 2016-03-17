@@ -99,4 +99,57 @@ class Chat extends Controller{
         $this->_setOutput($tema);
     }
     
+    public function subirArchivoChat(){
+        
+        $var = $_POST['file'];
+        print_r($var);
+        if($this->input->post('file')) {
+
+            $config['upload_path'] = 'upload'; 
+            $config['file_name'] = $var;
+            $config['overwrite'] = 'TRUE';
+            $config["allowed_types"] = 'jpg|jpeg|png|pdf|doc|docx|xls|xlsx';
+            $config["max_size"] = '1024';
+            $this->load->library('upload', $config);
+
+            if(!$this->upload->do_upload()) {               
+                $this->data['error'] = $this->upload->display_errors();
+                print_r( $this->data['error']);
+            } else {
+                print_r("success");                                      
+            }
+        }
+        /*
+        $files = $_FILES;
+
+
+
+        $data=array();
+
+
+        if(!empty($_FILES)){
+
+
+
+                    $_FILES['userfile']['name']= $files['userfile']['name'];
+                    $_FILES['userfile']['type']= $files['userfile']['type'];
+                    $_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'];
+                    $_FILES['userfile']['error']= $files['userfile']['error'];
+                    $_FILES['userfile']['size']= $files['userfile']['size']; 
+
+
+                    $this->upload->initialize($this->set_upload_options());
+
+                    $uploaded=$this->upload->do_upload();
+
+
+
+            echo json_encode($data);
+        }else{
+
+
+            echo 'empty';
+
+        }*/
+    }
 }

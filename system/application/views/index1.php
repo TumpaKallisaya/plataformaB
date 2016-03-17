@@ -809,7 +809,7 @@ Tarija: Tel. 664-4136 <br>
                             <input id="id_usuario_de" type="text" hidden="true" value="<?php echo $id_usuario;?>"/>
                             <input id="id_usuario_para" type="text" hidden="true"/>
                             <span class="input-group-btn">
-                                <img src="<?php echo base_url();?>images/cargar.png" class="img-circle-pk"/>
+                                <a href="#" data-toggle="modal" data-target="#modalUpload"><img src="<?php echo base_url();?>images/cargar.png" class="img-circle-pk" /></a>
                             </span>
                             <input style="margin-top:10px;" id="mensaje" type="text" class="form-control input-sm chat_input" placeholder="Escribe tu mensaje aqui..." />
                             <span class="input-group-btn">
@@ -861,6 +861,30 @@ Tarija: Tel. 664-4136 <br>
             </div>
         </div>
     </div>
+                            <form method="post" enctype="multipart/form-data">
+    <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Subir un archivo a la conversaciòn</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <h5>Usted esta a punto de subir un archivo a la conversación.</h5>
+                        <input id="file" value=" " type="file" class="file" data-show-preview="false">
+                    </div>
+                    <br>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="creaTema" value="submit" onclick="subirArchivo();">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                            </form>                            
+                            
     <div class="btn-group dropup">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-cog"></span>
