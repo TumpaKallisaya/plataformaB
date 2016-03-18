@@ -170,26 +170,54 @@ var append_chat_data = function(chat_data){
     });
 }
 
-function subirArchivo(){
-        var formUrl = baseURL+'index.php/chat/subirArchivoChat';
-        var formData = new FormData($('#modalUpload')[0]);
-
-        $.ajax({
-                url: formUrl,
-                type: 'POST',
-                data: formData,
-                mimeType: "multipart/form-data",
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data, textSatus, jqXHR){
-                        //now get here response returned by PHP in JSON fomat you can parse it using JSON.parse(data)
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                        //handle here error returned
+$(function() {
+    $('#upload_file').submit(function(e) {
+        e.preventDefault();
+        $.ajaxFileUpload({
+            url             :baseURL + 'index.php/chat/subirArchivoChat', 
+            secureuri       :false,
+            fileElementId   :'userfile',
+            dataType: 'JSON',
+            success : function (data)
+            {
+                var obj = jQuery.parseJSON(data);
+                if(obj['status'] == 'success'){
+                    //$('#files').html(obj['msg']);
+                    console.log('Logro subir el archivo');
                 }
+                else{
+                    console.log('No logro subir el archivo');
+                    //$('#files').html('No logro subir el archivo');
+                }
+            }
         });
-}
+        return false;
+    });
+});
+
+// no se si sea necesario
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+        
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+        
+    });
+});
 
 /**************************************/
 

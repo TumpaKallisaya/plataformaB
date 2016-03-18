@@ -861,29 +861,36 @@ Tarija: Tel. 664-4136 <br>
             </div>
         </div>
     </div>
-                            <form method="post" enctype="multipart/form-data">
-    <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Subir un archivo a la conversaciòn</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <h5>Usted esta a punto de subir un archivo a la conversación.</h5>
-                        <input id="file" value=" " type="file" class="file" data-show-preview="false">
+    <form method="post" action="" id="upload_file">
+        <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Subir un archivo a la conversaciòn</h4>
                     </div>
-                    <br>                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="creaTema" value="submit" onclick="subirArchivo();">Crear</button>
+                    <div class="modal-body">
+                        <h5>Usted esta a punto de subir un archivo a la conversación.</h5>
+                        <!--<input type="file" name="userfile" id="userfile">-->
+                        
+                        <!--<div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-primary btn-file">
+                                    Examinar&hellip;--> <input type="file" name="userfile" id="userfile" class="filestyle" data-buttonName="btn-primary" multiple>
+                                <!--</span>
+                            </span>
+                            <input type="text" class="form-control" readonly>
+                        </div>-->
+                        <br>
+                    </div>  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <input type="submit" name="submit" class="btn btn-default" id="submit" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-                            </form>                            
+    </form>                            
                             
     <div class="btn-group dropup">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -939,6 +946,9 @@ Tarija: Tel. 664-4136 <br>
     <script type="text/javascript" src="<?php echo base_url();?>theme/assets/js/contact.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>theme/assets/js/script.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>js/chat.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>js/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>js/bootstrap-filestyle.js"></script>
+    
     <script type="text/javascript">
         var baseURL = "<?php echo base_url(); ?>";
     </script>
