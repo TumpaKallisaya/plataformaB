@@ -64,6 +64,7 @@ var append_lista_abiertos = function(listabiertos_data){
 function getIdTema(str) {
   console.log('Este es el id del tema: ' + str);
   document.getElementById('idTemaCargado').value = str;
+  document.getElementById('idTemaCargadoAdj').value = str;
   $('#ultimoChatRec').val('').removeClass('value').removeAttr('value');
   document.getElementById('recibido').innerHTML="";
   
@@ -111,8 +112,8 @@ var update_chats_constant = function(){
         var offset = 60*15;
         request_timestamp = parseInt(Date.now()/1000 - offset);
     }
-    console.log('Constante: '+baseURL+'index.php/chat/get_chats_constantes?id_usuario_de='+$('#id_usuario_de').val()+
-            '&id_tema='+$('#idTemaCargado').val()+'&timestamp='+request_timestamp);
+    //console.log('Constante: '+baseURL+'index.php/chat/get_chats_constantes?id_usuario_de='+$('#id_usuario_de').val()+
+            //'&id_tema='+$('#idTemaCargado').val()+'&timestamp='+request_timestamp);
     $.getJSON(baseURL+'index.php/chat/get_chats_constantes?id_usuario_de='+$('#id_usuario_de').val()+
             '&id_tema='+$('#idTemaCargado').val()+'&timestamp='+request_timestamp, function(data){
                 append_chat_data(data);
@@ -182,8 +183,13 @@ $(function() {
             {
                 var obj = jQuery.parseJSON(data);
                 if(obj['status'] == 'success'){
-                    //$('#files').html(obj['msg']);
-                    console.log('Logro subir el archivo');
+                    //$('#msjPorsiacaso').html(obj['msg']);
+                    console.log('Logro subir el archivo: '+obj['name']);
+                    $.getJSON(baseURL+'index.php/chat/guardar?id_usuario_de='+$('#id_usuario_de').val()+
+                        '&id_tema='+$('#idTemaCargado').val(), function(data){
+                        document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
+
+                    });
                 }
                 else{
                     console.log('No logro subir el archivo');

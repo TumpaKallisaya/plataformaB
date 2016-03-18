@@ -871,6 +871,7 @@ Tarija: Tel. 664-4136 <br>
                     </div>
                     <div class="modal-body">
                         <h5>Usted esta a punto de subir un archivo a la conversación.</h5>
+                        <input id="idTemaCargadoAdj" name="idTemaCargadoAdj" type="text" hidden="true" />
                         <!--<input type="file" name="userfile" id="userfile">-->
                         
                         <!--<div class="input-group">

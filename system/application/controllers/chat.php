@@ -104,8 +104,8 @@ class Chat extends Controller{
         $status = "";
         $msg = "";
         $file_element_name = 'userfile';
-
-       if ($status != "error"){
+        
+        if ($status != "error"){
             $config['upload_path'] = './archivosChat/';
             $config['allowed_types'] = 'jpg|png|doc|pdf|txt';
             $config['max_size'] = 1024 * 8;
@@ -117,19 +117,20 @@ class Chat extends Controller{
                 $msg = $this->upload->display_errors('', '');
             }else{
                 $data = $this->upload->data();
-                $image_path = $data['full_path'];
+                $file_path = $data['full_path'];
                 
-                if(file_exists($image_path)){
+                if(file_exists($file_path)){
                     $status = "success";
-                    $msg = "File successfully uploaded";
+                    $path = $file_path;
+                    $name = $data['file_name'];
                 }else{
                     $status = "error";
                     $msg = "Something went wrong when saving the file, please try again.";
                 }
             }
             @unlink($_FILES[$file_element_name]);
-       }
-       echo json_encode(array('status' => $status, 'msg' => $msg));
+        }
+        echo json_encode(array('status' => $status, 'path' => $path, 'name' => $name));
         /*
         $files = $_FILES;
 
@@ -163,4 +164,47 @@ class Chat extends Controller{
 
         }*/
     }
+    
+    public function logConsole($name, $data = NULL, $jsEval = FALSE)
+ {
+      if (! $name) return false;
+
+      $isevaled = false;
+      $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
+
+      if ($jsEval && (is_array($data) || is_object($data)))
+      {
+           $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
+           $isevaled = true;
+      }
+      else
+      {
+           $data = json_encode($data);
+      }
+
+      # sanitalize
+      $data = $data ? $data : '';
+      $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
+      $replace_array = array('"', '', '', '\\n', '\\n');
+      $data = preg_replace($search_array,  $replace_array, $data);
+      $data = ltrim(rtrim($data, '"'), '"');
+      $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
+
+$js = <<<JSCODE
+\n<script>
+ // fallback - to deal with IE (or browsers that don't have console)
+ if (! window.console) console = {};
+ console.log = console.log || function(name, data){};
+ // end of fallback
+
+ console.log('$name');
+ console.log('------------------------------------------');
+ console.log('$type');
+ console.log($data);
+ console.log('\\n');
+</script>
+JSCODE;
+
+      echo $js;
+ }
 }
