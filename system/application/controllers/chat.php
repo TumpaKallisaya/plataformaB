@@ -10,7 +10,6 @@ class Chat extends Controller{
     }
     
     public function enviar_chat(){
-        //$mensaje = $this->input->get('mensaje', null);
         parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
         $mensaje = $_GET['mensaje'];
         $id_usuario_de = $this->input->get('id_usuario_de', '');
@@ -123,6 +122,7 @@ class Chat extends Controller{
                     $status = "success";
                     $path = $file_path;
                     $name = $data['file_name'];
+                    $size = $data['file_size'];
                 }else{
                     $status = "error";
                     $msg = "Something went wrong when saving the file, please try again.";
@@ -130,81 +130,96 @@ class Chat extends Controller{
             }
             @unlink($_FILES[$file_element_name]);
         }
-        echo json_encode(array('status' => $status, 'path' => $path, 'name' => $name));
-        /*
-        $files = $_FILES;
-
-
-
-        $data=array();
-
-
-        if(!empty($_FILES)){
-
-
-
-                    $_FILES['userfile']['name']= $files['userfile']['name'];
-                    $_FILES['userfile']['type']= $files['userfile']['type'];
-                    $_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'];
-                    $_FILES['userfile']['error']= $files['userfile']['error'];
-                    $_FILES['userfile']['size']= $files['userfile']['size']; 
-
-
-                    $this->upload->initialize($this->set_upload_options());
-
-                    $uploaded=$this->upload->do_upload();
-
-
-
-            echo json_encode($data);
-        }else{
-
-
-            echo 'empty';
-
-        }*/
+        echo json_encode(array('status' => $status, 'path' => $path, 'name' => $name, 'size' => $size));
     }
     
-    public function logConsole($name, $data = NULL, $jsEval = FALSE)
- {
-      if (! $name) return false;
-
-      $isevaled = false;
-      $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
-
-      if ($jsEval && (is_array($data) || is_object($data)))
-      {
-           $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
-           $isevaled = true;
-      }
-      else
-      {
-           $data = json_encode($data);
-      }
-
-      # sanitalize
-      $data = $data ? $data : '';
-      $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
-      $replace_array = array('"', '', '', '\\n', '\\n');
-      $data = preg_replace($search_array,  $replace_array, $data);
-      $data = ltrim(rtrim($data, '"'), '"');
-      $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
-
-$js = <<<JSCODE
-\n<script>
- // fallback - to deal with IE (or browsers that don't have console)
- if (! window.console) console = {};
- console.log = console.log || function(name, data){};
- // end of fallback
-
- console.log('$name');
- console.log('------------------------------------------');
- console.log('$type');
- console.log($data);
- console.log('\\n');
-</script>
-JSCODE;
-
-      echo $js;
- }
+    public function guardarArchAdj(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario_de = $this->input->get('id_usuario_de', '');
+        $id_tema = $this->input->get('id_tema', '');
+        $path = $this->input->get('path', '');
+        $archivo = $this->input->get('archivo', '');
+        $tamano = $this->input->get('size', '');
+        $timestamp = time();
+        
+        $chatAdjGuardado = $this->chatmodel->guardarAdjChat($id_usuario_de, $id_tema, $path, $archivo, $tamano, $timestamp);
+        $this->_setOutput($chatAdjGuardado);
+    }
+    
+    public function derivarChat(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_tema = $_GET['id_tema_actual'];
+        $seccion = $_GET['nueva_seccion'];
+        
+        $temaAntiguo = $this->chatmodel->getTemaSel($id_tema);
+        $dataFinTema = array(
+            'estado' => 'CERRADO'
+        );
+        $temaFinalizado = $this->chatmodel->finalizarTema($id_tema, $dataFinTema);
+        
+        $nuevoTema = $this->chatmodel->crearTema($temaAntiguo->id_usuario, $temaAntiguo->tema, $seccion, $temaAntiguo->id_operador);
+        $temaNuevo = $this->chatmodel->buscarTemaCompleto($temaAntiguo->id_usuario, $temaAntiguo->tema, $seccion, $temaAntiguo->id_operador, $estado = 'ABIERTO');
+        
+        $dataChatDerivado = array(
+            'id_tema' => $temaNuevo->id
+        );
+        $chatDerivado = $this->chatmodel->derivarChatNuevoTema($id_tema, $dataChatDerivado);
+        $this->_setOutput($temaNuevo);
+    }
+    
+    public function finalizarChat(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_tema = $_GET['id_tema'];
+        
+        $dataFinTema = array(
+            'estado' => 'CERRADO'
+        );
+        $temaFinalizado = $this->chatmodel->finalizarTema($id_tema, $dataFinTema);
+        $this->_setOutput($temaFinalizado);
+    }
+    
+    public function getNroTemasActualesAtt(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario = $_GET['id_usuario'];
+        
+        $nroTemasActuales = $this->chatmodel->getNroTemasAtt($id_usuario);
+        $this->_setOutput(array('nroTemasAct' => $nroTemasActuales));
+    }
+    
+    public function getNroTemasActualesOpe(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario = $_GET['id_usuario'];
+        
+        $nroTemasActuales = $this->chatmodel->getNroTemasOpe($id_usuario);
+        $this->_setOutput(array('nroTemasAct' => $nroTemasActuales));
+    }
+    
+    public function getNroTemasAntiguos(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario = $_GET['id_usuario'];
+        $es_att = $_GET['es_att'];
+        
+        
+        if($es_att == 'si'){
+            $nroTemasAntiguos = $this->chatmodel->getNroTemasAntiguosAtt($id_usuario)->num_rows();
+        }else{
+            $nroTemasAntiguos = $this->chatmodel->getNroTemasAntiguosOpe($id_usuario)->num_rows();
+        }
+        $this->_setOutput(array('nroTemasAnt' => $nroTemasAntiguos));
+    }
+    
+    public function get_temasAntiguos(){
+        parse_str(substr(strrchr($_SERVER['REQUEST_URI'], "?"), 1), $_GET);
+        $id_usuario = $_GET['id_usuario'];
+        $es_att = $_GET['es_att'];
+        
+        if($es_att == 'si'){
+            $temasAntiguos = $this->chatmodel->getNroTemasAntiguosAtt($id_usuario)->result_array();
+        }else{
+            $temasAntiguos = $this->chatmodel->getNroTemasAntiguosOpe($id_usuario)->result_array();
+        }
+        $this->_setOutput($temasAntiguos);
+    }
+    
+    
 }

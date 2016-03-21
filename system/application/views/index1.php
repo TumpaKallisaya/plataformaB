@@ -779,9 +779,7 @@ Tarija: Tel. 664-4136 <br>
                               <a href="#"><i class="fa fa-archive fa-lg"></i> Antiguos <span class="arrow"></span></a>
                             </li>  
                             <ul class="sub-menu collapse" id="service">
-                                <li><a href="#">New Service 1</a></li>
-                              <li>New Service 2</li>
-                              <li>New Service 3</li>
+                                <div id="temasAntiguos"></div>
                             </ul>
                         </ul>
                     </div>
@@ -816,6 +814,17 @@ Tarija: Tel. 664-4136 <br>
                                 <button class="btn btn-primary btn-sm" id="submit">Enviar</button>
                             </span>
                         </div>
+                        <?php if($esAtt){ ?>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-md-6">
+                                <a href="" class="btn btn-warning center-block" data-toggle="modal" data-target="#modalDerivar">Derivar Conversación</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="" class="btn btn-danger center-block" data-toggle="modal" data-target="#modalFinalizar">Finalizar Conversación</a>
+                            </div>
+                            
+                        </div>
+                        <?php } ?>
                     </div>
                     </div>
             </div>
@@ -861,6 +870,7 @@ Tarija: Tel. 664-4136 <br>
             </div>
         </div>
     </div>
+    <!-- Modal para el archv adjunto -->
     <form method="post" action="" id="upload_file">
         <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel">
             <div class="modal-dialog" role="document">
@@ -872,16 +882,7 @@ Tarija: Tel. 664-4136 <br>
                     <div class="modal-body">
                         <h5>Usted esta a punto de subir un archivo a la conversación.</h5>
                         <input id="idTemaCargadoAdj" name="idTemaCargadoAdj" type="text" hidden="true" />
-                        <!--<input type="file" name="userfile" id="userfile">-->
-                        
-                        <!--<div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-primary btn-file">
-                                    Examinar&hellip;--> <input type="file" name="userfile" id="userfile" class="filestyle" data-buttonName="btn-primary" multiple>
-                                <!--</span>
-                            </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>-->
+                        <input type="file" name="userfile" id="userfile" class="filestyle" data-buttonName="btn-primary" multiple>
                         <br>
                     </div>  
                     <div class="modal-footer">
@@ -891,8 +892,73 @@ Tarija: Tel. 664-4136 <br>
                 </div>
             </div>
         </div>
-    </form>                            
-                            
+    </form>
+    
+    <!-- Modal para el derivado de conversación -->
+    <div class="modal fade" id="modalDerivar" tabindex="-1" role="dialog" aria-labelledby="modalDerivarLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Derivar toda la conversaciòn</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="row container">
+                            <div class="col-md-12">
+                                    <p>Si esta seguro de derivar toda la conversación, se pide seleccionar la sección a la cual será derivada:</p>
+                            </div>
+                        </div>
+                        <div class="row container-fluid" style="margin-right:10px;">
+                            <div class="col-md-3">
+                                <label for="secDer" class="col-md-3 control-label">Seccion:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select name="secDer" class="form-control input-sm" id="seccionDerivar">
+                                    <option value="">Escoja una opción</option>
+                                    <?php foreach ($listaSecciones as $seccion){ ?>
+                                    <option value="<?php echo $seccion['cod_seccion']; ?>"><?php echo $seccion['desc_seccion']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>  
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" onclick="derivarConvSec();" id="btnDerivar">Derivar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para el fianlizado de conversación -->
+    <div class="modal fade" id="modalFinalizar" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Finalizar conversación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row container">
+                        <div class="col-md-12">
+                                <p>Usted esta a punto de Finalizar esta conversación. Esta Seguro?</p>
+                        </div>
+                    </div>
+                </div>  
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="finalizarConversacion();">Aceptar</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Finaliza codigo para el chat -->
+    
+    
     <div class="btn-group dropup">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-cog"></span>

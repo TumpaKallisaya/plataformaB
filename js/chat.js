@@ -14,12 +14,38 @@ $('#creaTema').click(function(e){
             '&id_operador='+$('#idOperador').val(), function(data){
                 actualiza_tema(data);
             });
+    
     $('#myModal').modal('hide');
+    $('#temaChat').val('').removeClass('value').removeAttr('value');
+    $('#seccion').val('').removeClass('value').removeAttr('value');
 });
 
 var update_temas = function(){
     var esAtt = $('#esAtt').val();
-    console.log('Es Att: '+esAtt);
+    //console.log('Es Att: '+esAtt);
+    
+    var numLiTemas = document.getElementById("products").getElementsByTagName("li").length;
+    console.log('Numero de lis: ' + numLiTemas);
+    if(esAtt === 'si'){
+        $.getJSON(baseURL+'index.php/chat/getNroTemasActualesAtt?id_usuario='+$('#id_usuario_de').val()+
+            '&valor=null', function(data){
+                if(numLiTemas > data['nroTemasAct']){
+                    $('#ultimoTema').val('').removeClass('value').removeAttr('value');
+                    document.getElementById('temasRecientes').innerHTML="";
+                }
+                
+            });
+    }else{
+        $.getJSON(baseURL+'index.php/chat/getNroTemasActualesOpe?id_usuario='+$('#id_usuario_de').val()+
+            '&valor=null', function(data){
+                if(numLiTemas > data['nroTemasAct']){
+                    $('#ultimoTema').val('').removeClass('value').removeAttr('value');
+                    document.getElementById('temasRecientes').innerHTML="";
+                }
+            });
+    }
+    
+    
     var ultTema;
     if(document.getElementById('ultimoTema').value == ''){
         ultTema = 0;
@@ -27,8 +53,8 @@ var update_temas = function(){
         ultTema = parseInt(document.getElementById('ultimoTema').value);
     }
     if(esAtt === 'si'){
-        console.log(baseURL+'index.php/chat/get_temasAttAbiertos?id_usuario='+$('#id_usuario_de').val()+
-            '&ultimo_tema='+ultTema);
+        //console.log(baseURL+'index.php/chat/get_temasAttAbiertos?id_usuario='+$('#id_usuario_de').val()+
+          //  '&ultimo_tema='+ultTema);
         $.getJSON(baseURL+'index.php/chat/get_temasAttAbiertos?id_usuario='+$('#id_usuario_de').val()+
             '&ultimo_tema='+ultTema, function(data){
                 append_lista_abiertos(data);
@@ -41,6 +67,42 @@ var update_temas = function(){
                 append_lista_abiertos(data);
             });
     }
+}
+
+var update_temas_antiguos = function(){
+    var esAtt = $('#esAtt').val();
+    
+    //console.log(baseURL+'index.php/chat/get_temasAttAbiertos?id_usuario='+$('#id_usuario_de').val()+
+      //  '&ultimo_tema='+ultTema);
+    var numLiTemasAntiguos = document.getElementById("service").getElementsByTagName("li").length;  
+    console.log(baseURL+'index.php/chat/getNroTemasAntiguos?id_usuario='+$('#id_usuario_de').val()+
+            '&es_att='+esAtt);
+    $.getJSON(baseURL+'index.php/chat/getNroTemasAntiguos?id_usuario='+$('#id_usuario_de').val()+
+            '&es_att='+esAtt, function(data){
+                //console.log('nro temas antiguos: ' + data['nroTemasAnt']);
+                if(numLiTemasAntiguos != data['nroTemasAnt']){
+                    document.getElementById('temasAntiguos').innerHTML="";
+                    $.getJSON(baseURL+'index.php/chat/get_temasAntiguos?id_usuario='+$('#id_usuario_de').val()+
+                        '&es_att='+esAtt, function(data){
+                            append_lista_antiguos(data);
+                        });
+                }
+                
+            });
+            
+    
+}
+
+var append_lista_antiguos = function(listantiguos_data){
+    listantiguos_data.forEach(function(data){
+        console.log('un datoooo: '+data.tema);
+        var html = '<li id="'+data.id+'"><a href="" onclick="imprimirRepAnt('+data.id+'); false;" target="_blank">'+ data.tema +'</a></li>';
+        $('#temasAntiguos').html($('#temasAntiguos').html()+html);
+    });
+}
+
+function imprimirRepAnt(id_tema){
+    window.location.href = "printChatPdf?id_tema="+id_tema+"&arch=null";
 }
 
 var append_lista_abiertos = function(listabiertos_data){
@@ -127,8 +189,8 @@ var update_chats_constant = function(){
 var append_chat_data = function(chat_data){
     chat_data.forEach(function(data){
         var id_usuario = $('#id_usuario_de').val();
-        console.log("id_usuario_de chat: "+data.id_usuario_de+" - usuario nativo: " + id_usuario);
-        console.log('Id Chat: '+ data.id + " - Ultimo Chat Recibido: "+ document.getElementById('ultimoChatRec').value);
+        //console.log("id_usuario_de chat: "+data.id_usuario_de+" - usuario nativo: " + id_usuario);
+        //console.log('Id Chat: '+ data.id + " - Ultimo Chat Recibido: "+ document.getElementById('ultimoChatRec').value);
         var chatId = parseInt(data.id);
         var ultimoChatId;
         if(document.getElementById('ultimoChatRec').value == ''){
@@ -138,36 +200,64 @@ var append_chat_data = function(chat_data){
         }
         if (chatId > ultimoChatId){
             if(data.id_usuario_de === id_usuario){
-                var html = '<div class="row msg_container base_receive">';
-                html += '       <div class="col-md-2 col-xs-2 avatar">';
-                html += '           <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
-                html += '       </div>';
-                html += '       <div class="col-md-10 col-xs-10">';
-                html += '           <div class="messages msg_receive">';
-                html += '               <p>'+data.mensaje+'</p>';
-                html += '               <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
-                html += '           </div>';
-                html += '       </div>';
-                html += '   </div>';
+                if (data.mensaje == ''){
+                    var html = '<div class="row msg_container base_receive">';
+                        html += '       <div class="col-md-2 col-xs-2 avatar">';
+                        html += '           <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
+                        html += '       </div>';
+                        html += '       <div class="col-md-10 col-xs-10">';
+                        html += '           <div class="messages msg_receive">';
+                        html += '               <a href="" onclick="downloadAdjChat('+data.id+'); return false;"> <span class="fa fa-download"></span></a>';
+                        html += '               <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
+                        html += '           </div>';
+                        html += '       </div>';
+                        html += '   </div>';
+                }else{
+                    var html = '<div class="row msg_container base_receive">';
+                        html += '       <div class="col-md-2 col-xs-2 avatar">';
+                        html += '           <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
+                        html += '       </div>';
+                        html += '       <div class="col-md-10 col-xs-10">';
+                        html += '           <div class="messages msg_receive">';
+                        html += '               <p>'+data.mensaje+'</p>';
+                        html += '               <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
+                        html += '           </div>';
+                        html += '       </div>';
+                        html += '   </div>';
+                }
                 document.getElementById('ultimoChatRec').value = data.id;
             }else{
-                var html = '    <div class="row msg_container base_sent">';
-                html += '           <div class="col-md-10 col-xs-10">';
-                html += '               <div class="messages msg_sent">';
-                html += '                   <p>'+data.mensaje+'</p>';
-                html += '                   <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
-                html += '               </div>';
-                html += '           </div>';
-                html += '           <div class="col-md-2 col-xs-2 avatar">';
-                html += '               <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
-                html += '           </div>';
-                html += '       </div>';
+                if(data.mensaje == ''){
+                    var html = '    <div class="row msg_container base_sent">';
+                        html += '           <div class="col-md-10 col-xs-10">';
+                        html += '               <div class="messages msg_sent">';
+                        html += '               <a href="" onclick="downloadAdjChat('+data.id+'); return false;"> <span class="fa fa-download"></span></a>';
+                        html += '                   <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
+                        html += '               </div>';
+                        html += '           </div>';
+                        html += '           <div class="col-md-2 col-xs-2 avatar">';
+                        html += '               <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
+                        html += '           </div>';
+                        html += '       </div>';
+                }else{
+                    var html = '    <div class="row msg_container base_sent">';
+                        html += '           <div class="col-md-10 col-xs-10">';
+                        html += '               <div class="messages msg_sent">';
+                        html += '                   <p>'+data.mensaje+'</p>';
+                        html += '                   <time datetime="2009-11-13T20:00">'+data.dde+' • '+data.fecha_envio+'</time>';
+                        html += '               </div>';
+                        html += '           </div>';
+                        html += '           <div class="col-md-2 col-xs-2 avatar">';
+                        html += '               <img src="'+baseURL+'images/ope.png" class=" img-responsive ">';
+                        html += '           </div>';
+                        html += '       </div>';
+                }
                 document.getElementById('ultimoChatRec').value = data.id;
             }
             $('#recibido').html($('#recibido').html()+html)
             document.getElementById('scroll').scrollTop=9999999;
         }
-        console.log('Ultimo chatId ingresado: '+document.getElementById('ultimoChatRec').value);
+        //console.log('Ultimo chatId ingresado: '+document.getElementById('ultimoChatRec').value);
     });
 }
 
@@ -185,10 +275,14 @@ $(function() {
                 if(obj['status'] == 'success'){
                     //$('#msjPorsiacaso').html(obj['msg']);
                     console.log('Logro subir el archivo: '+obj['name']);
-                    $.getJSON(baseURL+'index.php/chat/guardar?id_usuario_de='+$('#id_usuario_de').val()+
-                        '&id_tema='+$('#idTemaCargado').val(), function(data){
-                        document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
-
+                    console.log(baseURL+'index.php/chat/guardarArchAdj?id_usuario_de='+$('#id_usuario_de').val()+
+                        '&id_tema='+$('#idTemaCargado').val()+'&path='+obj['path']+
+                        '&archivo='+obj['name']+'&size='+obj['size']);
+                    $.getJSON(baseURL+'index.php/chat/guardarArchAdj?id_usuario_de='+$('#id_usuario_de').val()+
+                        '&id_tema='+$('#idTemaCargado').val()+'&path='+obj['path']+
+                        '&archivo='+obj['name']+'&size='+obj['size'],
+                        function(data){
+                            //document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
                     });
                 }
                 else{
@@ -201,57 +295,49 @@ $(function() {
     });
 });
 
-// no se si sea necesario
+function downloadAdjChat(id){
+    console.log('Id: '+id);
+    console.log(baseURL+"index.php/chat/downloadAdjChat?id_chat="+id+"&arch=null");
+    window.location.href = "downloadAdjChat?id_chat="+id+"&arch=null";
+    $('#userfile').val('').removeClass('value').removeAttr('value');
+    $('#upload_file').modal('hide');
+    
+    
+}
 
-$(document).on('change', '.btn-file :file', function() {
-  var input = $(this),
-      numFiles = input.get(0).files ? input.get(0).files.length : 1,
-      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-  input.trigger('fileselect', [numFiles, label]);
-});
+function derivarConvSec(){
+    $.getJSON(baseURL+'index.php/chat/derivarChat?id_tema_actual='+$('#idTemaCargado').val()+
+                        '&nueva_seccion='+$('#seccionDerivar').val(),
+                        function(data){
+                            //document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
+                            $('#ultimoChatRec').val('').removeClass('value').removeAttr('value');
+                            $('#idTemaCargado').val('').removeClass('value').removeAttr('value');
+                            document.getElementById("temaConversacion").innerHTML = 'Bienvenidos al Chat de la ATT!';
+                            document.getElementById('recibido').innerHTML="";
+                            $('#modalDerivar').modal('hide');
+                            $('#seccionDerivar').val('').removeClass('value').removeAttr('value');
+                    });
+}
 
-$(document).ready( function() {
-    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-        
-        var input = $(this).parents('.input-group').find(':text'),
-            log = numFiles > 1 ? numFiles + ' files selected' : label;
-        
-        if( input.length ) {
-            input.val(log);
-        } else {
-            if( log ) alert(log);
-        }
-        
-    });
-});
+function finalizarConversacion(){
+    $.getJSON(baseURL+'index.php/chat/finalizarChat?id_tema='+$('#idTemaCargado').val()+
+                        '&valor=null',
+                        function(data){
+                            $('#ultimoChatRec').val('').removeClass('value').removeAttr('value');
+                            $('#idTemaCargado').val('').removeClass('value').removeAttr('value');
+                            //$('#ultimoTema').val('').removeClass('value').removeAttr('value');
+                            document.getElementById("temaConversacion").innerHTML = 'Bienvenidos al Chat de la ATT!';
+                            //document.getElementById('temasRecientes').innerHTML="";
+                            document.getElementById('recibido').innerHTML="";
+                            $('#modalFinalizar').modal('hide');
+                    });
+}
 
 /**************************************/
 
 
 setInterval(function(){
     update_temas();
+    update_temas_antiguos();
     update_chats_constant();
 }, 1500);
-
-// para el menu acordion
-$(' ul ul li ').click(function(e) {
-    e.preventDefault();
-    
-    
-    //var valorIdTema = $(this).closest('li').data('value');
-    //console.log("Este es el id del tema: " + valorIdTema);
-    console.log("Holaaaaaaaaaaaaa " );
-    /*
-    $('#ultimomsjrec').val('').removeClass('value').removeAttr('value');
-    var value = $(this).closest('li').data('value');
-    var usucont = "#usulist"+value;
-    
-    console.log("valorr: "+value + "   usuario: "+$(usucont).val());
-    var $paraActual = $('#id_usuario_para').val();
-    if($paraActual != $(usucont).val()){
-        document.getElementById('recibido').innerHTML="";
-        document.getElementById('id_usuario_para').value = $(usucont).val();
-        carga_mensajes();
-    }*/
-    
-});

@@ -7,7 +7,7 @@ class Chatmodel extends Model{
     //pasandole el nick del usuario que hace la solicitud para que no le devuelva sus propios mensajes
     public function getChatsConstantes($id_usuario, $id_tema, $timestamp){
         $where = 'c.id_tema ='.$id_tema.' and c.timestamp > '.$timestamp;
-        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.fecha_envio, ude.descripcion_usuario as dde');
+        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.path, c.archivo, c.tamano, c.fecha_envio, ude.descripcion_usuario as dde');
         $this->db->from('tb_chat c');
         $this->db->join('tb_usuarios ude', 'c.id_usuario_de = ude.id_usuario');
         $this->db->where($where);
@@ -19,7 +19,7 @@ class Chatmodel extends Model{
     
     public function getChatsRecientesAttOpe($id_usuario, $id_tema){
         $where = 'c.id_tema ='.$id_tema;
-        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.fecha_envio, ude.descripcion_usuario as dde');
+        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.path, c.archivo, c.tamano, c.fecha_envio, ude.descripcion_usuario as dde');
         $this->db->from('tb_chat c');
         $this->db->join('tb_usuarios ude', 'c.id_usuario_de = ude.id_usuario');
         $this->db->where($where);
@@ -36,7 +36,24 @@ class Chatmodel extends Model{
             'id_tema' => $id_tema,
             'id_usuario_de' => $id_usuario_de,
             'mensaje' => $mensaje,
-            'timestamp' => $timestamp
+            'timestamp' => $timestamp,
+            'id_tema_hist' => $id_tema
+        );
+        $this->db->set('fecha_envio', 'NOW()', false);
+        
+        return $this->db->insert('tb_chat', $data);
+    }
+    
+    public function guardarAdjChat($id_usuario_de, $id_tema, $path, $archivo, $tamano, $timestamp){
+        $data = array(
+            'id_tema' => $id_tema,
+            'id_usuario_de' => $id_usuario_de,
+            'path' => $path,
+            'archivo' => $archivo,
+            'tamano' => $tamano,
+            'timestamp' => $timestamp,
+            'id_tema_hist' => $id_tema
+                
         );
         $this->db->set('fecha_envio', 'NOW()', false);
         
@@ -60,6 +77,8 @@ class Chatmodel extends Model{
     }
     
     public function getListaSecciones(){
+        $qry = 'cod_seccion in (3, 4, 6)';
+        $this->db->where($qry);
         $this->db->order_by('cod_seccion', 'ASC');
         $query = $this->db->get('tb_seccion');
         
@@ -176,6 +195,107 @@ class Chatmodel extends Model{
     public function getTemaSel($id_tema){
         $this->db->where('id', $id_tema);
         $query = $this->db->get('tb_chat_tema');
+        
+        return $query->row();
+    }
+    
+    public function getAdjChat($id){
+        $this->db->select('c.id, c.id_tema, c.id_usuario_de, c.mensaje, c.path, c.archivo, c.tamano, c.fecha_envio');
+        $this->db->from('tb_chat c');
+        $this->db->where('c.id', $id);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        
+        return $query->row();
+    }
+    
+    public function finalizarTema($id_tema, $data){
+        $this->db->where('id', $id_tema);
+        return $this->db->update('tb_chat_tema', $data);
+    }
+    
+    public function derivarChatNuevoTema($id_tema_antiguo, $dataChatDerivado){
+        $this->db->where('id_tema', $id_tema_antiguo);
+        return $this->db->update('tb_chat', $dataChatDerivado);
+    }
+    
+    public function buscarTemaCompleto($id_usuario, $tema, $seccion, $id_operador, $estado){
+        $qry = 'id_usuario='.$id_usuario.' and tema="'.$tema.'" and cod_seccion='.$seccion.' and id_operador='.$id_operador.' and estado="'.$estado.'"';
+        $this->db->where($qry);
+        $this->db->limit(1);
+        $query = $this->db->get('tb_chat_tema');
+        
+        return $query->row();
+    }
+    
+    public function getNroTemasAtt($id_usuario){
+        $qry = "us.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO'";
+        $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->from('tb_chat_tema ct');
+        $this->db->join('tb_usuario_seccion us', 'us.cod_seccion = ct.cod_seccion');
+        $this->db->where($qry);
+        $this->db->order_by('ct.id', 'ASC');
+        $query = $this->db->get();
+        
+        return $query->num_rows();
+    }
+    
+    public function getNroTemasOpe($id_usuario){
+        $qry = "uo.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO'";
+        $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->from('tb_chat_tema ct');
+        $this->db->join('tb_usuario_operador uo', 'uo.id_operador = ct.id_operador');
+        $this->db->where($qry);
+        $this->db->order_by('ct.id', 'ASC');
+        $query = $this->db->get();
+        
+        return $query->num_rows();
+    }
+    
+    public function getNroTemasAntiguosAtt($id_usuario){
+        $qry = "us.id_usuario = ".$id_usuario." and ct.estado = 'CERRADO'";
+        $this->db->select('distinct(ct.id), ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->from('tb_chat_tema ct');
+        $this->db->join('tb_usuario_seccion us', 'us.cod_seccion = ct.cod_seccion');
+        $this->db->join('tb_chat c','ct.id = c.id_tema');
+        $this->db->where($qry);
+        $this->db->order_by('ct.id', 'ASC');
+        $query = $this->db->get();
+        
+        return $query;
+    }
+    
+    public function getNroTemasAntiguosOpe($id_usuario){
+        $qry = "uo.id_usuario = ".$id_usuario." and ct.estado = 'CERRADO'";
+        $this->db->select('distinct(ct.id), ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->from('tb_chat_tema ct');
+        $this->db->join('tb_usuario_operador uo', 'uo.id_operador = ct.id_operador');
+        $this->db->join('tb_chat c','ct.id = c.id_tema');
+        $this->db->where($qry);
+        $this->db->order_by('ct.id', 'ASC');
+        $query = $this->db->get();
+        
+        return $query;
+    }
+    
+    
+    public function chatPdf($id_tema){
+        $this->db->select('c.mensaje, c.path, c.archivo, c.tamano, c.fecha_envio, u.usuario, u.descripcion_usuario');
+        $this->db->from('tb_chat c');
+        $this->db->join('tb_usuarios u', 'u.id_usuario = c.id_usuario_de');
+        $this->db->where('c.id_tema', $id_tema);
+        $this->db->order_by('c.id', 'ASC');
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+    
+    public function temaPdf($id_tema) {
+        $this->db->select('ct.tema  , s.desc_seccion');
+        $this->db->from('tb_chat_tema ct');
+        $this->db->join('tb_seccion s', 'ct.cod_seccion = s.cod_seccion');
+        $this->db->where('ct.id', $id_tema);
+        $query = $this->db->get();
         
         return $query->row();
     }
