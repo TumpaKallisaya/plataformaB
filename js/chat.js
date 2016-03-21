@@ -284,6 +284,8 @@ $(function() {
                         function(data){
                             //document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
                     });
+                    $('#userfile').val('').removeClass('value').removeAttr('value');
+                    $('#upload_file').modal('hide');
                 }
                 else{
                     console.log('No logro subir el archivo');
@@ -299,10 +301,6 @@ function downloadAdjChat(id){
     console.log('Id: '+id);
     console.log(baseURL+"index.php/chat/downloadAdjChat?id_chat="+id+"&arch=null");
     window.location.href = "downloadAdjChat?id_chat="+id+"&arch=null";
-    $('#userfile').val('').removeClass('value').removeAttr('value');
-    $('#upload_file').modal('hide');
-    
-    
 }
 
 function derivarConvSec(){
