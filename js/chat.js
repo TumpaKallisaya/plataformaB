@@ -33,7 +33,6 @@ var update_temas = function(){
                     $('#ultimoTema').val('').removeClass('value').removeAttr('value');
                     document.getElementById('temasRecientes').innerHTML="";
                 }
-                
             });
     }else{
         $.getJSON(baseURL+'index.php/chat/getNroTemasActualesOpe?id_usuario='+$('#id_usuario_de').val()+
@@ -43,8 +42,7 @@ var update_temas = function(){
                     document.getElementById('temasRecientes').innerHTML="";
                 }
             });
-    }
-    
+    }    
     
     var ultTema;
     if(document.getElementById('ultimoTema').value == ''){
@@ -67,6 +65,42 @@ var update_temas = function(){
                 append_lista_abiertos(data);
             });
     }
+}
+
+var append_lista_abiertos = function(listabiertos_data){
+    listabiertos_data.forEach(function(data){
+        console.log('un datoooo: '+data.tema);
+        var ultTema;
+        var dataid = parseInt(data.id);
+        if(document.getElementById('ultimoTema').value == ''){
+            ultTema = 0;
+        }else{
+            ultTema = parseInt(document.getElementById('ultimoTema').value);
+        }
+        if(dataid > ultTema){
+            var html = '<li id="'+data.id+'" onclick="getIdTema(this.id)"><a href="#">'+ data.tema +'</a></li>';
+            document.getElementById('ultimoTema').value = data.id;
+            $('#temasRecientes').prepend(html);
+        }
+    });
+}
+
+function getIdTema(str) {
+  console.log('Este es el id del tema: ' + str);
+  document.getElementById('idTemaCargado').value = str;
+  document.getElementById('idTemaCargadoAdj').value = str;
+  $('#ultimoChatRec').val('').removeClass('value').removeAttr('value');
+  document.getElementById('recibido').innerHTML="";
+  
+  $.getJSON(baseURL+'index.php/chat/get_tema_sel?id_usuario_de='+$('#id_usuario_de').val()+
+            '&id_tema='+$('#idTemaCargado').val(), function(data){
+                document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
+                
+            });
+  
+  
+  console.log("Recuperando lo que se escribio en el input: " + $('#idTemaCargado').val()); 
+  carga_mensajes();
 }
 
 var update_temas_antiguos = function(){
@@ -105,41 +139,7 @@ function imprimirRepAnt(id_tema){
     window.location.href = "printChatPdf?id_tema="+id_tema+"&arch=null";
 }
 
-var append_lista_abiertos = function(listabiertos_data){
-    listabiertos_data.forEach(function(data){
-        console.log('un datoooo: '+data.tema);
-        var ultTema;
-        var dataid = parseInt(data.id);
-        if(document.getElementById('ultimoTema').value == ''){
-            ultTema = 0;
-        }else{
-            ultTema = parseInt(document.getElementById('ultimoTema').value);
-        }
-        if(dataid > ultTema){
-            var html = '<li id="'+data.id+'" onclick="getIdTema(this.id)"><a href="#">'+ data.tema +'</a></li>';
-            document.getElementById('ultimoTema').value = data.id;
-            $('#temasRecientes').html($('#temasRecientes').html()+html);
-        }
-    });
-}
 
-function getIdTema(str) {
-  console.log('Este es el id del tema: ' + str);
-  document.getElementById('idTemaCargado').value = str;
-  document.getElementById('idTemaCargadoAdj').value = str;
-  $('#ultimoChatRec').val('').removeClass('value').removeAttr('value');
-  document.getElementById('recibido').innerHTML="";
-  
-  $.getJSON(baseURL+'index.php/chat/get_tema_sel?id_usuario_de='+$('#id_usuario_de').val()+
-            '&id_tema='+$('#idTemaCargado').val(), function(data){
-                document.getElementById("temaConversacion").innerHTML = 'Tema: '+data.tema;
-                
-            });
-  
-  
-  console.log("Recuperando lo que se escribio en el input: " + $('#idTemaCargado').val()); 
-  carga_mensajes();
-}
 $('#submit').click(function(e){
     e.preventDefault();
 
