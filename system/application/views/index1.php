@@ -759,12 +759,27 @@ Tarija: Tel. 664-4136 <br>
 
                 </div> -->
 
+                <ul class="mainmenu">
+                    <input id="esAtt" type="text" hidden="true" value="<?php if($esAtt){ echo 'si';}else{echo 'no';};?>"/>
+                    <input id="ultimoTema" type="text" hidden="true" />
+                    <li><i class="fa fa-comments-o icon" id="lisTemasRec"></i><span>CONVERSACIONES</span></li>
+                    <li><i class="fa fa-comment-o icon"></i><span>Temas Recientes</span><div class="messages">23</div></li>
+                        <ul class="submenu" id="products">
+                            <div id="temasRecientes"></div>
+                        </ul>
+                    <li><i class="fa fa-archive icon"></i><span>Temas Antiguos</span></li>
+                        <ul class="submenu" id="service">
+                            <div id="temasAntiguos"></div>
+                        </ul>
+                </ul>
+                
+<!--
                 <div class="nav-side-menu">
                     <div class="brand"><span class="fa fa-comments"></span> Conversaciones</div>
                     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
                     <div class="menu-list">
-                        <input id="esAtt" type="text" hidden="true" value="<?php if($esAtt){ echo 'si';}else{echo 'no';};?>"/>
+                        <input id="esAtt" type="text" hidden="true" value="<?php //if($esAtt){ echo 'si';}else{echo 'no';};?>"/>
                         <input id="ultimoTema" type="text" hidden="true" />
                         <ul id="menu-content" class="menu-content collapse out">
                             <li  data-toggle="collapse" data-target="#products" class="collapsed active" id="lisTemasRec">
@@ -773,8 +788,6 @@ Tarija: Tel. 664-4136 <br>
                             <ul class="sub-menu collapse" id="products">
                                 <div id="temasRecientes"></div>
                             </ul>
-                            
-                            
                             <li data-toggle="collapse" data-target="#service" class="collapsed">
                               <a href="#"><i class="fa fa-archive fa-lg"></i> Antiguos <span class="arrow"></span></a>
                             </li>  
@@ -784,6 +797,7 @@ Tarija: Tel. 664-4136 <br>
                         </ul>
                     </div>
                 </div>
+                -->
             </div>
             <div class="col-xs-8 col-md-8">
                     <div class="panel panel-default">

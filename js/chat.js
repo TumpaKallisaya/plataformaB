@@ -78,7 +78,7 @@ var append_lista_abiertos = function(listabiertos_data){
             ultTema = parseInt(document.getElementById('ultimoTema').value);
         }
         if(dataid > ultTema){
-            var html = '<li id="'+data.id+'" onclick="getIdTema(this.id)"><a href="#">'+ data.tema +'</a></li>';
+            var html = '<li id="'+data.id+'" onclick="getIdTema('+data.id+')"><a href="#"><div style="margin-top:-30px;">'+ data.tema +'</div></a> <div style="float:right; margin-right:4px !important; font-size:10px !important;">'+data.descripcion_usuario+' - '+data.fec_ult+'</div></li>';
             document.getElementById('ultimoTema').value = data.id;
             $('#temasRecientes').prepend(html);
         }
@@ -330,6 +330,23 @@ function finalizarConversacion(){
                             $('#modalFinalizar').modal('hide');
                     });
 }
+
+
+// para el nuevo menu
+var $submenu = $('.submenu');
+  var $mainmenu = $('.mainmenu');
+  $submenu.hide();
+  $submenu.first().delay(400).slideDown(700);
+  $submenu.on('click','li', function() {
+    $submenu.siblings().find('li').removeClass('chosen');
+    $(this).addClass('chosen');
+  });
+  $mainmenu.on('click', 'li', function() {
+    $(this).next('.submenu').slideToggle().siblings('.submenu').slideUp();
+  });
+  $mainmenu.children('li:last-child').on('click', function() {
+    $mainmenu.fadeOut().delay(500).fadeIn();
+  });
 
 /**************************************/
 

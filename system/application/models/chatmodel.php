@@ -169,27 +169,72 @@ class Chatmodel extends Model{
     }
     
     public function getLisTemAbiAtt($id_usuario, $ultimo_tema){
-        $qry = "us.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO' and ct.id > ".$ultimo_tema;
+        /*$qry = "us.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO' and ct.id > ".$ultimo_tema;
         $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema');
         $this->db->from('tb_chat_tema ct');
         $this->db->join('tb_usuario_seccion us', 'us.cod_seccion = ct.cod_seccion');
         $this->db->where($qry);
-        $this->db->order_by('ct.id', 'ASC');
-        $query = $this->db->get();
+        $this->db->order_by('ct.id', 'DESC');
+        $query = $this->db->get();*/
+        $query = $this->db->query("select ct.id, ct.cod_seccion, ct.id_operador, ct.tema, ct.estado, c.id_usuario_de as id_usu_ult, c.fecha_envio as fec_ult, max(c.id) as id_conv, u.descripcion_usuario
+                from tb_chat_tema ct, tb_usuario_seccion us, tb_chat c, tb_usuarios u
+                where us.cod_seccion = ct.cod_seccion
+                and ct.id = c.id_tema
+                and c.id_usuario_de = u.id_usuario
+                and us.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO'
+                and ct.id > ".$ultimo_tema."
+                group by ct.id
+                union
+                select ct.id, ct.cod_seccion, ct.id_operador, ct.tema, ct.estado, ct.id_usuario as id_usu_ult, ct.fecha_creacion as fec_ult, ct.id as id_conv, u.descripcion_usuario  
+                from tb_chat_tema ct
+                left join tb_chat c
+                        on ct.id = c.id_tema	
+                join tb_usuario_seccion us
+                        on us.cod_seccion = ct.cod_seccion
+                join tb_usuarios u
+                        on ct.id_usuario = u.id_usuario
+                where c.id_tema is null
+                and us.id_usuario = ".$id_usuario."
+                and ct.estado = 'ABIERTO'
+                and ct.id > ".$ultimo_tema."
+                order by id asc");
         
-        return $query->result_array();
+        return $query;
     }
     
     public function getLisTemAbiOpe($id_usuario, $ultimo_tema){
-        $qry = "uo.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO' and ct.id > ".$ultimo_tema;
+        /*$qry = "uo.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO' and ct.id > ".$ultimo_tema;
         $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema');
         $this->db->from('tb_chat_tema ct');
         $this->db->join('tb_usuario_operador uo', 'uo.id_operador = ct.id_operador');
         $this->db->where($qry);
         $this->db->order_by('ct.id', 'ASC');
-        $query = $this->db->get();
+        $query = $this->db->get();*/
+        $query = $this->db->query(" select ct.id, ct.cod_seccion, ct.id_operador, ct.tema, ct.estado, c.id_usuario_de as id_usu_ult, c.fecha_envio as fec_ult, max(c.id) as id_conv, u.descripcion_usuario
+                from tb_chat_tema ct, tb_usuario_operador uo, tb_chat c, tb_usuarios u
+                where uo.id_operador = ct.id_operador
+                and ct.id = c.id_tema
+                and c.id_usuario_de = u.id_usuario
+                and uo.id_usuario = ".$id_usuario." and ct.estado = 'ABIERTO'
+                and ct.id > ".$ultimo_tema."
+                group by ct.id
+                union
+                select ct.id, ct.cod_seccion, ct.id_operador, ct.tema, ct.estado, ct.id_usuario as id_usu_ult, ct.fecha_creacion as fec_ult, ct.id as id_conv, u.descripcion_usuario  
+                from tb_chat_tema ct
+                left join tb_chat c
+                    on ct.id = c.id_tema	
+                join tb_usuario_operador uo
+                    on uo.id_operador = ct.id_operador
+                join tb_usuarios u
+                    on ct.id_usuario = u.id_usuario
+                where c.id_tema is null
+                and uo.id_usuario = ".$id_usuario."
+                and ct.estado = 'ABIERTO'
+                and ct.id > ".$ultimo_tema."
+                order by id asc
+                ");
         
-        return $query->result_array();
+        return $query;
     }
     
     public function getTemaSel($id_tema){
