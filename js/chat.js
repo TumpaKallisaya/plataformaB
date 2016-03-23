@@ -78,7 +78,7 @@ var append_lista_abiertos = function(listabiertos_data){
             ultTema = parseInt(document.getElementById('ultimoTema').value);
         }
         if(dataid > ultTema){
-            var html = '<li id="'+data.id+'" onclick="getIdTema('+data.id+')"><a href="#"><div style="margin-top:-30px;">'+ data.tema +'</div></a> <div style="float:right; margin-right:4px !important; font-size:10px !important;">'+data.descripcion_usuario+' - '+data.fec_ult+'</div></li>';
+            var html = '<li id="'+data.id+'" onclick="getIdTema('+data.id+')" data-value="'+data.fec_ult+'"><a href="#"><div style="margin-top:-30px;">'+ data.tema +'</div></a> <div style="float:right; margin-right:4px !important; font-size:10px !important;" id="ultMensajeUsu">'+data.descripcion_usuario+' - '+data.fec_ult+'</div></li>';
             document.getElementById('ultimoTema').value = data.id;
             $('#temasRecientes').prepend(html);
         }
@@ -331,6 +331,29 @@ function finalizarConversacion(){
                     });
 }
 
+var verificaNuevoMensaje = function(){
+    var nums = document.getElementById("temasRecientes");
+    var listItem = nums.getElementsByTagName("li");
+    
+    console.log('Nro de lis: ' + listItem.length);
+    
+    for (var i = 0; i < listItem.length;i++){
+        var idTema = listItem[i].id;
+        var antiguaFecha = $('#'+listItem[i].id+'').attr('data-value');
+        
+        console.log('tema cargado: '+idTema+' fecha: ' + antiguaFecha)
+        console.log('valor: ' + document.getElementById(listItem[i].id+' ultMensajeUsu').innerHTML);
+        
+        //console.log('valor actual del div: '+$('#temasRecientes li #'+listItem[i]+' #ultMensajeUsu').val());
+        /*$.getJSON(baseURL+'index.php/chat/verifNuevoMensaje?id_tema='+idTema+'&id_usuario='+$('#id_usuario_de').val(),
+                        function(data){
+                            if (antiguaFecha !== data.fec_ult){
+                                $('#temasRecientes li #'+listItem[i]+' #ultMensajeUsu').val();
+                                //document.getElementById('temasRecientes').innerHTML="";
+                            }
+                    });*/
+    }
+}
 
 // para el nuevo menu
 var $submenu = $('.submenu');
@@ -355,4 +378,5 @@ setInterval(function(){
     update_temas();
     update_temas_antiguos();
     update_chats_constant();
+    verificaNuevoMensaje();
 }, 1500);
