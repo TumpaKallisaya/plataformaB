@@ -299,12 +299,13 @@ class Chatmodel extends Model{
     
     public function getNroTemasAntiguosAtt($id_usuario){
         $qry = "us.id_usuario = ".$id_usuario." and ct.estado = 'CERRADO'";
-        $this->db->select('distinct(ct.id), ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema, min(c.fecha_envio) as fecha_ini, max(c.fecha_envio) as fecha_fin');
         $this->db->from('tb_chat_tema ct');
         $this->db->join('tb_usuario_seccion us', 'us.cod_seccion = ct.cod_seccion');
         $this->db->join('tb_chat c','ct.id = c.id_tema');
         $this->db->where($qry);
-        $this->db->order_by('ct.id', 'ASC');
+        $this->db->group_by('ct.id');
+        $this->db->order_by('ct.id', 'DESC');
         $query = $this->db->get();
         
         return $query;
@@ -312,12 +313,13 @@ class Chatmodel extends Model{
     
     public function getNroTemasAntiguosOpe($id_usuario){
         $qry = "uo.id_usuario = ".$id_usuario." and ct.estado = 'CERRADO'";
-        $this->db->select('distinct(ct.id), ct.cod_seccion, ct.id_operador, ct.tema');
+        $this->db->select('ct.id, ct.cod_seccion, ct.id_operador, ct.tema, min(c.fecha_envio) as fecha_ini, max(c.fecha_envio) as fecha_fin');
         $this->db->from('tb_chat_tema ct');
         $this->db->join('tb_usuario_operador uo', 'uo.id_operador = ct.id_operador');
         $this->db->join('tb_chat c','ct.id = c.id_tema');
         $this->db->where($qry);
-        $this->db->order_by('ct.id', 'ASC');
+        $this->db->group_by('ct.id');
+        $this->db->order_by('ct.id', 'DESC');
         $query = $this->db->get();
         
         return $query;

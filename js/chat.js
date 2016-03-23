@@ -130,7 +130,7 @@ var update_temas_antiguos = function(){
 var append_lista_antiguos = function(listantiguos_data){
     listantiguos_data.forEach(function(data){
         console.log('un datoooo: '+data.tema);
-        var html = '<li id="'+data.id+'"><a href="" onclick="imprimirRepAnt('+data.id+'); false;" target="_blank">'+ data.tema +'</a></li>';
+        var html = '<li id="'+data.id+'"><a href="" onclick="imprimirRepAnt('+data.id+'); false;" target="_blank"> <div style="margin-top:-30px;">'+ data.tema +'</div></a> <div style="float:right; margin-right:4px !important; font-size:10px !important;">'+data.fecha_ini+' - '+data.fecha_fin+'</div> </li>';
         $('#temasAntiguos').html($('#temasAntiguos').html()+html);
     });
 }
