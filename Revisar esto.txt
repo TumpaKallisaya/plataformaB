@@ -1,0 +1,7 @@
+Segun lo que lei hay que cambiar el valor de esta configuracion "sess_time_to_update"
+
+revisa los siguientes enlaces
+
+http://www.samundra.com.np/solved-codeigniter-session-expires-frequently/1258
+
+http://blog.thecodingbox.me/codeigniter-frequent-session-expiration-fix/
